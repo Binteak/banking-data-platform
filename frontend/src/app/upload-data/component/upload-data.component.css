@@ -1,0 +1,862 @@
+/* ============================================================
+   UPLOAD DATA
+   ============================================================ */
+
+.upload-data-container {
+
+  padding: 32px;
+
+  background: #f5f6f8;
+
+  min-height: 100vh;
+
+  color: #202124;
+
+  box-sizing: border-box;
+
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+
+.eyebrow {
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+
+  color: #6b7280;
+
+  margin-bottom: 6px;
+
+}
+
+
+/* ============================================================
+   PRIME NG CARDS
+   ============================================================ */
+
+:host ::ng-deep .p-card {
+
+  border: 1px solid #e3e6ea;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, .04);
+
+}
+
+
+/* ============================================================
+   UPLOAD
+   ============================================================ */
+
+.upload-section {
+
+  margin-top: 0;
+
+}
+
+
+.upload-title {
+
+  margin-bottom: 24px;
+
+}
+
+
+.upload-title h2 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+}
+
+
+.upload-title p {
+
+  margin: 6px 0 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+}
+
+
+/* ============================================================
+   SELECTED FILE
+   ============================================================ */
+
+.selected-file {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 16px;
+
+  border: 1px solid #e3e6ea;
+
+  border-radius: 8px;
+
+  background: #f8f9fa;
+
+}
+
+
+.file-icon {
+
+  font-size: 28px;
+
+}
+
+
+.file-information {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+
+.file-information small {
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+}
+
+
+/* ============================================================
+   RESULT
+   ============================================================ */
+
+.result-card {
+
+  margin-top: 24px;
+
+}
+
+
+.result-content {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 16px;
+
+}
+
+
+.result-icon {
+
+  font-size: 24px;
+
+}
+
+
+.result-content h2 {
+
+  margin: 0 0 6px;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+}
+
+
+.result-content p {
+
+  margin: 0 0 6px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+}
+
+
+.success-card {
+
+  border-left: 4px solid #2e7d32 !important;
+
+}
+
+
+.error-card {
+
+  border-left: 4px solid #c62828 !important;
+
+}
+
+
+/* ============================================================
+   INFORMATION
+   ============================================================ */
+
+.information-card {
+
+  margin-top: 24px;
+
+}
+
+
+.information-content {
+
+  display: flex;
+
+  gap: 16px;
+
+  align-items: flex-start;
+
+}
+
+
+.information-content > i {
+
+  font-size: 20px;
+
+  color: #6b7280;
+
+}
+
+
+.information-content h3 {
+
+  margin: 0 0 6px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+}
+
+
+.information-content p {
+
+  margin: 4px 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+}
+
+
+/* ============================================================
+   PREVIEW
+   ============================================================ */
+
+.preview-card {
+
+  margin-top: 24px;
+
+}
+
+
+.table-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 20px;
+
+}
+
+
+.table-header h2 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+}
+
+
+.table-header span {
+
+  display: block;
+
+  margin-top: 6px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+}
+
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+:host ::ng-deep .corporate-table th {
+
+  background: #f8f9fa;
+
+  color: #374151;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: .5px;
+
+  border-bottom: 1px solid #dfe3e8;
+
+}
+
+
+:host ::ng-deep .corporate-table td {
+
+  font-size: 13px;
+
+  color: #374151;
+
+  padding: 14px 12px;
+
+}
+
+
+:host ::ng-deep .corporate-table tbody tr:hover {
+
+  background: #f8fafc;
+
+}
+
+
+/* ============================================================
+   FILE DROP ZONE
+   ============================================================ */
+
+.file-drop-zone {
+
+  margin-top: 24px;
+
+  min-height: 190px;
+
+  border: 1px dashed #c9cdd3;
+
+  border-radius: 8px;
+
+  background: #fafbfc;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 24px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color .2s ease,
+    background-color .2s ease;
+
+}
+
+
+.file-drop-zone:hover {
+
+  border-color: #9fa5ad;
+
+  background: #f7f8fa;
+
+}
+
+
+/* ============================================================
+   DROP ZONE ICON
+   ============================================================ */
+
+.drop-zone-icon {
+
+  width: 56px;
+
+  height: 56px;
+
+  border-radius: 50%;
+
+  background: #f0f1f3;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+}
+
+
+.drop-zone-icon i {
+
+  font-size: 24px;
+
+  color: #4b5563;
+
+}
+
+
+/* ============================================================
+   DROP ZONE CONTENT
+   ============================================================ */
+
+.drop-zone-content {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+}
+
+
+.drop-zone-content h3 {
+
+  margin: 0;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  color: #202124;
+
+}
+
+
+.drop-zone-content p {
+
+  margin: 5px 0 14px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+}
+
+
+.drop-zone-content small {
+
+  margin-top: 8px;
+
+  color: #8a9099;
+
+  font-size: 11px;
+
+}
+
+
+/* ============================================================
+   PRIME NG FILE BUTTON
+   ============================================================ */
+
+:host ::ng-deep
+.file-drop-zone .p-fileupload-basic {
+
+  display: inline-flex;
+
+}
+
+
+:host ::ng-deep
+.file-drop-zone .p-button {
+
+  font-size: 13px;
+
+  padding: 9px 16px;
+
+  border-radius: 6px;
+
+}
+
+
+/* ============================================================
+   SELECTED FILE
+   ============================================================ */
+
+.selected-file {
+
+  margin-top: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+}
+
+
+.file-icon {
+
+  width: 38px;
+
+  height: 38px;
+
+  border-radius: 6px;
+
+  background: #f1f2f4;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+}
+
+
+.file-icon i {
+
+  font-size: 18px;
+
+  color: #4b5563;
+
+}
+
+
+.file-information {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+
+.file-information strong {
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #202124;
+
+}
+
+
+.file-information small {
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+  .upload-data-container {
+
+    padding: 20px;
+
+  }
+
+
+  .selected-file {
+
+    align-items: flex-start;
+
+  }
+
+
+  .table-header {
+
+    flex-direction: column;
+
+    gap: 12px;
+
+  }
+
+}
+
+/* ============================================================
+   ARCHIVOS DE DEMOSTRACIÓN
+   ============================================================ */
+
+.demo-files-card {
+  margin-top: 24px;
+}
+
+.demo-header h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #202124;
+}
+
+.demo-header p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #6b7280;
+}
+
+.demo-group {
+  margin-top: 20px;
+}
+
+.demo-group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #4b5563;
+}
+
+.demo-group:first-of-type .demo-group-title i {
+  color: #067647;
+}
+
+.demo-group:last-of-type .demo-group-title i {
+  color: #b54708;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.demo-file {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.demo-file:hover {
+  border-color: #c4c9d0;
+  box-shadow: 0 4px 12px rgba(17, 24, 39, .06);
+}
+
+/* Archivo de demo actualmente seleccionado en el uploader */
+.demo-file.is-selected {
+  border-color: #e53935;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, .12);
+}
+
+.demo-file-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.demo-country {
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #1c1f26;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.demo-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.demo-badge--valid {
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.demo-badge--quality {
+  background: #fffaeb;
+  color: #b54708;
+}
+
+.demo-badge--rejected {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.demo-title {
+  margin-top: 4px;
+  font-size: 15px;
+  color: #202124;
+}
+
+.demo-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  color: #6b7280;
+}
+
+.demo-note {
+  flex: 1;
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #4b5563;
+}
+
+.demo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.demo-meta .pi {
+  font-size: 11px;
+  margin-right: 2px;
+}
+
+.demo-initial {
+  color: #067647;
+}
+
+.demo-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Botón neutro: el rojo queda para la acción principal (Process File) */
+:host ::ng-deep .demo-actions .p-button {
+  height: 34px;
+  font-size: 13px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+:host ::ng-deep .demo-actions .p-button:enabled:hover,
+:host ::ng-deep .demo-actions a.p-button:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #202124;
+}
+
+:host ::ng-deep .demo-actions .demo-use.p-button {
+  flex: 1;
+  justify-content: center;
+}
+
+:host ::ng-deep .demo-file.is-selected .demo-use.p-button {
+  border-color: #e53935;
+  color: #e53935;
+}
+
+:host ::ng-deep .demo-actions .demo-download.p-button {
+  width: 36px;
+  padding: 0;
+  justify-content: center;
+}
+
+:host ::ng-deep .demo-actions .demo-download .p-button-icon {
+  margin: 0;
+}
+
+@media (max-width: 1200px) {
+
+  .demo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+/* Móvil: tarjetas a todo el ancho y más compactas */
+@media (max-width: 700px) {
+
+  .demo-files-card {
+    margin-top: 16px;
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .demo-file {
+    gap: 4px;
+    padding: 12px;
+  }
+
+  .demo-title {
+    margin-top: 2px;
+    font-size: 14px;
+  }
+
+  /* El título ya dice país y periodo; el nombre se ve al descargar */
+  .demo-name {
+    display: none;
+  }
+
+  .demo-note {
+    font-size: 12px;
+  }
+
+  .demo-actions {
+    margin-top: 6px;
+  }
+
+}

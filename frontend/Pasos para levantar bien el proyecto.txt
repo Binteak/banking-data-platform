@@ -1,0 +1,58 @@
+Pasos para levantar bien el proyecto:
+
+Eliminar dependencias
+Remove-Item -Recurse -Force .\node_modules
+Remove-Item -Force .\package-lock.json
+
+Limpiar cache
+npm cache clean --force
+
+Instalamos v18 y primeicons
+npm install primeng@18.0.2 primeicons@latest --save
+
+Resources (En v18 falla)
+npm install primeng@17.18.7 --force  -> por si la carpeta resources no tira
+
+Reinstalamos todas las dependencias
+npm install (Comrpobará si faltan si ya hemos instalado otras antes)
+
+Lanzar
+npx ng serve --open -> Si hay problemas de incompatibilidades o un angular global y queremos seguir usando nuestra versión
+ng serve
+
+
+
+
+TEST--------------------------
+
+ng generate config karma -> Creamos la configuración que Karma necesita para saber qué tests ejecutar, en qué navegador, qué frameworks usar, etc.
+
+Si falla (dependencias):
+npm install
+npm install karma karma-jasmine karma-chrome-launcher karma-coverage jasmine-core @types/jasmine @angular-devkit/build-angular --save-dev
+
+
+
+
+
+DESPLIEGUE
+1. Comprobamos despliegue en local
+
+
+
+
+Remove-Item -Recurse -Force dist -> eliminar el dist
+npm run build -> lanzamos de nuevo
+npx http-server dist/frontend/browser
+npx serve -s dist/frontend/browser
+
+borramos cache en el navegador
+
+
+
+
+Available on:
+  http://127.0.0.1:8080
+
+2. Desplegamos en Github (main)
+3. Render despliega por nosotros

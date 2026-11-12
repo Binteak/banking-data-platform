@@ -1,0 +1,798 @@
+<div class="reporting-container">
+
+  <!-- ===================================================== -->
+  <!-- CONFIGURATION -->
+  <!-- ===================================================== -->
+
+  <p-card class="filter-card configuration-card">
+
+    <div class="filter-header">
+      <div>
+        <h2>{{ 'Report Configuration' | t }}</h2>
+        <p>{{ 'Select an available reporting universe and calculate the corresponding risk metrics.' | t }}</p>
+      </div>
+    </div>
+
+
+    <div class="filter-grid" [class.is-expanded]="showAllFilters">
+
+
+      <!-- REPORT NAME -->
+
+      <div class="filter-field filter-field--full-mobile">
+
+        <label>
+          {{ 'Report name' | t }}
+        </label>
+
+        <input
+          pInputText
+          type="text"
+          [(ngModel)]="reportName"
+          [placeholder]="'e.g. June 2026 Colombia Risk Report' | t">
+
+        <small>
+          {{ 'Internal name assigned to this report.' | t }}
+        </small>
+
+      </div>
+
+
+      <!-- REPORTING DATE -->
+
+      <div class="filter-field">
+
+        <label>
+          {{ 'Reporting date' | t }}
+        </label>
+
+        <p-dropdown
+          [options]="reportingDates"
+          [(ngModel)]="reportingDate"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'Select reporting date' | t"
+          [showClear]="true"
+          (onChange)="onFilterChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+
+        </p-dropdown>
+
+      </div>
+
+
+      <!-- COUNTRY -->
+
+      <div class="filter-field">
+
+        <label>
+          {{ 'Country' | t }}
+        </label>
+
+        <p-dropdown
+          [options]="countries"
+          [(ngModel)]="country"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'Select country' | t"
+          [showClear]="true"
+          (onChange)="onFilterChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+
+        </p-dropdown>
+
+      </div>
+
+
+      <!-- PORTFOLIO -->
+
+      <div class="filter-field filter-field--secondary">
+
+        <label>
+          {{ 'Portfolio' | t }}
+        </label>
+
+        <p-dropdown
+          [options]="portfolios"
+          [(ngModel)]="portfolio"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'All portfolios' | t"
+          [showClear]="true"
+          (onChange)="onFilterChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+
+        </p-dropdown>
+
+      </div>
+
+
+      <!-- PRODUCT -->
+
+      <div class="filter-field filter-field--secondary">
+
+        <label>
+          {{ 'Product type' | t }}
+        </label>
+
+        <p-dropdown
+          [options]="productTypes"
+          [(ngModel)]="productType"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'All products' | t"
+          [showClear]="true"
+          (onChange)="onFilterChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+
+        </p-dropdown>
+
+      </div>
+
+
+      <!-- RISK STAGE -->
+
+      <div class="filter-field filter-field--secondary">
+
+        <label>
+          {{ 'Risk stage' | t }}
+        </label>
+
+        <p-dropdown
+          [options]="riskStages"
+          [(ngModel)]="riskStage"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'All stages' | t"
+          [showClear]="true"
+          (onChange)="onFilterChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+
+        </p-dropdown>
+
+      </div>
+
+
+      <!-- RATING -->
+
+      <div class="filter-field filter-field--secondary">
+
+        <label>
+          {{ 'Rating' | t }}
+        </label>
+
+        <p-dropdown
+          [options]="ratings"
+          [(ngModel)]="rating"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'All ratings' | t"
+          [showClear]="true"
+          (onChange)="onFilterChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+
+        </p-dropdown>
+
+      </div>
+
+
+      <!-- DEFAULT -->
+
+      <div class="filter-field filter-field--secondary">
+
+        <label>
+          {{ 'Default status' | t }}
+        </label>
+
+        <p-dropdown
+          [options]="defaultStatuses"
+          [(ngModel)]="defaultStatus"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'All exposures' | t"
+          [showClear]="true"
+          (onChange)="onFilterChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+
+        </p-dropdown>
+
+      </div>
+
+
+      <!-- Solo en móvil: muestra u oculta los filtros secundarios -->
+      <button
+        type="button"
+        class="filter-more"
+        [attr.aria-expanded]="showAllFilters"
+        (click)="showAllFilters = !showAllFilters">
+        <i class="pi pi-sliders-h"></i>
+        {{ (showAllFilters ? 'Fewer filters' : 'More filters') | t }}
+        <span class="filter-more-count" *ngIf="secondaryFilterCount">{{ secondaryFilterCount }}</span>
+        <i class="pi filter-more-chevron" [ngClass]="showAllFilters ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+      </button>
+
+    </div>
+
+
+    <!-- =================================================== -->
+    <!-- ACTIONS -->
+    <!-- =================================================== -->
+
+    <div class="filter-actions filter-actions--stacked">
+
+
+      <button
+        pButton
+        [label]="'Reset' | t"
+        icon="pi pi-refresh"
+        class="p-button-text"
+        (click)="resetFilters()">
+      </button>
+
+
+      <button
+        pButton
+        [label]="'Export Filtered Data' | t"
+        icon="pi pi-download"
+        class="p-button-secondary"
+        [loading]="exportingData"
+        [disabled]="!reportingDate || !country"
+        (click)="exportFilteredData()">
+      </button>
+
+
+      <button
+        pButton
+        [label]="'Calculate Metrics' | t"
+        icon="pi pi-chart-bar"
+        class="filter-action-primary"
+        [loading]="generating"
+        [disabled]="
+          !reportName ||
+          !reportingDate ||
+          !country
+        "
+        (click)="calculateMetrics()">
+      </button>
+
+
+      <button
+        pButton
+        [label]="'Generate PDF' | t"
+        icon="pi pi-file-pdf"
+        [loading]="generatingPdf"
+        [disabled]="!selectedMetrics"
+        class="p-button-secondary"
+        (click)="generatePDF()">
+      </button>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- CALCULATION OUTPUT -->
+  <!-- ===================================================== -->
+
+  <div
+    class="metrics-section"
+    *ngIf="selectedMetrics">
+
+
+    <div class="section-header">
+
+      <div>
+
+        <div class="eyebrow">
+          {{ 'CALCULATION OUTPUT' | t }}
+        </div>
+
+        <h2>
+          {{ selectedMetrics.reportName }}
+        </h2>
+
+        <p>
+
+          {{ selectedMetrics.country }}
+
+          ·
+
+          {{ selectedMetrics.reportingDate }}
+
+          ·
+
+          {{ selectedMetrics.recordsAnalysed | number }}
+
+          {{ 'records analysed' | t }}
+
+        </p>
+
+      </div>
+
+
+      <div class="quality-status">
+
+        <span>
+          {{ 'Data Quality' | t }}
+        </span>
+
+        <p-tag
+          [value]="getQualityLabel()"
+          [severity]="getQualitySeverity()">
+        </p-tag>
+
+      </div>
+
+    </div>
+
+
+    <!-- WARNING -->
+
+    <div
+      class="quality-warning"
+      *ngIf="
+        selectedMetrics.qualityStatus === 'FAILED'
+      ">
+
+      <i class="pi pi-exclamation-triangle"></i>
+
+      <div>
+
+        <strong>
+          {{ 'Reporting calculated with failed Data Quality controls' | t }}
+        </strong>
+
+        <p>
+          {{ 'The metrics are available for analysis, but this report is not considered validated.' | t }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- METRICS -->
+
+    <div class="metric-grid">
+
+
+      <div class="metric-card">
+
+        <span>
+          {{ 'Exposure Count' | t }}
+        </span>
+
+        <strong>
+          {{
+            selectedMetrics.metrics.exposureCount
+            | number
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card">
+
+        <span>
+          {{ 'Total Exposure' | t }}
+        </span>
+
+        <strong>
+          {{
+            formatCurrency(
+              selectedMetrics.metrics.totalExposure
+            )
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card">
+
+        <span>
+          {{ 'Total EAD' | t }}
+        </span>
+
+        <strong>
+          {{
+            formatCurrency(
+              selectedMetrics.metrics.totalEad
+            )
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card">
+
+        <span>
+          {{ 'Average PD' | t }}
+        </span>
+
+        <strong>
+          {{
+            formatPercentage(
+              selectedMetrics.metrics.averagePd
+            )
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card">
+
+        <span>
+          {{ 'Average LGD' | t }}
+        </span>
+
+        <strong>
+          {{
+            formatPercentage(
+              selectedMetrics.metrics.averageLgd
+            )
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card">
+
+        <span>
+          {{ 'Default Rate' | t }}
+        </span>
+
+        <strong>
+          {{
+            formatPercentage(
+              selectedMetrics.metrics.defaultRate
+            )
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="metric-card highlight">
+
+        <span>
+          {{ 'Expected Loss' | t }}
+        </span>
+
+        <strong>
+          {{
+            formatCurrency(
+              selectedMetrics.metrics.expectedLoss
+            )
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- EMPTY HISTORY -->
+  <!-- ===================================================== -->
+
+  <p-card *ngIf="!loading && reports.length === 0">
+
+    <div class="empty-state">
+
+      <img class="illustration illustration-md" src="assets/images/illustrations/reports-review.svg" alt="" aria-hidden="true" />
+
+      <h3>{{ 'No reports yet' | t }}</h3>
+
+      <p>{{ 'Configure the reporting universe above and click' | t }} <strong>{{ 'Calculate Metrics' | t }}</strong> {{ 'to generate your first report.' | t }}</p>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- HISTORY -->
+  <!-- ===================================================== -->
+
+  <p-card
+    class="results-card"
+    *ngIf="reports.length > 0">
+
+
+    <div class="section-header">
+
+      <div>
+
+        <div class="eyebrow">
+          {{ 'REPORTING HISTORY' | t }}
+        </div>
+
+        <h2>
+          {{ 'Calculated Metrics' | t }}
+        </h2>
+
+        <p>
+          {{ 'Persisted reporting calculations and metric definitions.' | t }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= ESCRITORIO: TABLA AGRUPADA POR INFORME ================= -->
+
+    <p-table
+      class="desktop-table"
+      [value]="reports"
+      [loading]="loading"
+      rowGroupMode="subheader"
+      groupRowsBy="report_name"
+      sortField="report_name"
+      sortMode="single"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10,25,50]"
+      [showCurrentPageReport]="true"
+      [currentPageReportTemplate]="'{first}–{last} of {totalRecords} metrics' | t"
+      styleClass="p-datatable-sm data-table corporate-table">
+
+
+      <ng-template pTemplate="header">
+
+        <tr>
+          <th>{{ 'Metric' | t }}</th>
+          <th class="num">{{ 'Value' | t }}</th>
+          <th style="width: 4rem"></th>
+        </tr>
+
+      </ng-template>
+
+
+      <!-- Cabecera de cada informe -->
+
+      <ng-template pTemplate="groupheader" let-report>
+
+        <tr class="report-group">
+
+          <td colspan="3">
+
+            <i class="pi pi-file" style="color: #e53935; margin-right: 8px"></i>
+
+            <strong>{{ report.report_name }}</strong>
+
+            <span class="report-meta">
+              {{ countryLabel(report.country) | t }}
+              · {{ report.reporting_date | date:'dd/MM/yyyy' }}
+              · {{ report.records_analysed | number }} {{ 'records' | t }}
+              · {{ 'run' | t }} {{ report.execution_date | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+
+      <!-- Métricas del informe -->
+
+      <ng-template pTemplate="body" let-report>
+
+        <tr>
+
+          <td>{{ metricLabel(report.metric_name) | t }}</td>
+
+          <td class="num">
+            <strong>{{ metricDisplayValue(report) }}</strong>
+          </td>
+
+          <td>
+            <button
+              pButton
+              icon="pi pi-info-circle"
+              class="p-button-text p-button-sm"
+              [title]="'View metric definition' | t"
+              (click)="showMetricDetails(report)">
+            </button>
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+
+      <ng-template pTemplate="emptymessage">
+
+        <tr>
+          <td colspan="3">
+            <div class="empty-state">
+              <i class="pi pi-chart-bar"></i>
+              <p>{{ 'No calculated reporting metrics available.' | t }}</p>
+            </div>
+          </td>
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
+
+    <!-- ================= MÓVIL: UNA TARJETA POR INFORME ================= -->
+
+    <div class="mobile-cards">
+
+      <div class="row-card" *ngFor="let group of reportGroups">
+
+        <strong>{{ group.name }}</strong>
+
+        <span class="cell-sub">
+          {{ countryLabel(group.country) | t }} · {{ group.date | date:'dd/MM/yyyy' }}
+          · {{ group.metrics[0]?.records_analysed | number }} {{ 'records' | t }}
+        </span>
+
+        <dl class="detail-list">
+          <div *ngFor="let metric of group.metrics" (click)="showMetricDetails(metric)">
+            <dt>{{ metricLabel(metric.metric_name) | t }}</dt>
+            <dd>{{ metricDisplayValue(metric) }}</dd>
+          </div>
+        </dl>
+
+      </div>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- DETAILS DIALOG -->
+  <!-- ===================================================== -->
+
+  <p-dialog
+    [(visible)]="showDetailsDialog"
+    [modal]="true"
+    [style]="{ width: '550px' }"
+    [header]="'Metric Definition' | t">
+
+
+    <div
+      class="details-dialog"
+      *ngIf="selectedMetricDetails">
+
+
+      <div class="detail-row">
+
+        <span>
+          {{ 'Metric' | t }}
+        </span>
+
+        <strong>
+          {{
+            metricLabel(
+              selectedMetricDetails.metric_name
+            ) | t
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <span>
+          {{ 'Calculated value' | t }}
+        </span>
+
+        <strong>
+          {{
+            metricDisplayValue(
+              selectedMetricDetails
+            )
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <span>
+          {{ 'Reporting date' | t }}
+        </span>
+
+        <strong>
+          {{
+            selectedMetricDetails.reporting_date
+            | date:'dd/MM/yyyy'
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="detail-definition">
+
+        <span>
+          {{ 'Definition' | t }}
+        </span>
+
+        <p>
+          {{
+            selectedMetricDetails.details
+          }}
+        </p>
+
+      </div>
+
+
+      <div class="detail-universe">
+
+        <span>
+          {{ 'Reporting universe' | t }}
+        </span>
+
+        <p>
+
+          {{ 'Country' | t }}:
+          {{ countryLabel(
+            selectedMetricDetails.country
+          ) | t }}
+
+          ·
+
+          {{ 'Portfolio' | t }}:
+          {{ selectedMetricDetails.portfolio }}
+
+          ·
+
+          {{ 'Product' | t }}:
+          {{ selectedMetricDetails.product_type }}
+
+          ·
+
+          {{ 'Risk Stage' | t }}:
+          {{ selectedMetricDetails.risk_stage }}
+
+          ·
+
+          {{ 'Rating' | t }}:
+          {{ selectedMetricDetails.rating }}
+
+          ·
+
+          {{ 'Default' | t }}:
+          {{ selectedMetricDetails.default_status }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </p-dialog>
+
+
+</div>

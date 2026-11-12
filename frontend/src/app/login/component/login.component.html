@@ -1,0 +1,73 @@
+<div class="login-page">
+
+  <!-- Selector de idioma -->
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button type="button" [class.active]="i18n.lang === 'en'" (click)="i18n.setLang('en')">EN</button>
+    <button type="button" [class.active]="i18n.lang === 'es'" (click)="i18n.setLang('es')">ES</button>
+  </div>
+
+  <div class="login-container">
+
+    <img class="illustration login-illustration" src="assets/images/illustrations/team-meeting.svg" alt="" aria-hidden="true" />
+
+    <div class="logo-container">
+      <img src="assets/logo/NexumLogoRojo.svg" class="login-icon" alt="Nexum Bank">
+      <span class="logo-divider"></span>
+      <span class="logo-app">{{ 'Banking' | t }} <strong>{{ 'Data Platform' | t }}</strong></span>
+    </div>
+
+    <div class="login-heading">
+      <h1>{{ 'Sign in' | t }}</h1>
+      <p>{{ 'Access the risk data management workspace.' | t }}</p>
+    </div>
+
+    <form class="login-form" (ngSubmit)="onLogin()">
+      <label for="username">{{ 'User' | t }}</label>
+      <input id="username" name="username" type="text" autocomplete="username"
+             [(ngModel)]="username" [placeholder]="'admin' | t" />
+
+      <label for="password">{{ 'Password' | t }}</label>
+      <input id="password" name="password" type="password" autocomplete="current-password"
+             [(ngModel)]="password" placeholder="1234" />
+
+      <p class="login-error" *ngIf="errorMessage">
+        <i class="pi pi-exclamation-circle"></i> {{ errorMessage | t }}
+      </p>
+
+      <button class="custom-button" type="submit" [disabled]="loading">
+        <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
+        {{ (loading ? 'Signing in…' : 'Login') | t }}
+      </button>
+    </form>
+
+    <!-- Login con Microsoft Entra ID (solo si está configurado) -->
+    <ng-container *ngIf="auth.entraEnabled">
+      <div class="login-divider"><span>{{ 'or' | t }}</span></div>
+
+      <button type="button" class="microsoft-button"
+              [disabled]="loadingMicrosoft || loading"
+              (click)="onMicrosoftLogin()">
+        <i *ngIf="loadingMicrosoft" class="pi pi-spin pi-spinner"></i>
+        <svg *ngIf="!loadingMicrosoft" class="microsoft-logo" viewBox="0 0 21 21" aria-hidden="true">
+          <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+          <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+          <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+          <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+        </svg>
+        <span>{{ 'Sign in with Microsoft' | t }}</span>
+      </button>
+    </ng-container>
+
+    <div class="demo-hint">
+      <i class="pi pi-info-circle"></i>
+      <span>{{ 'Demo credentials:' | t }} <strong>{{ 'admin' | t }}</strong> / <strong>1234</strong></span>
+    </div>
+
+  </div>
+
+  <div class="angular-powered">
+    <i class="pi pi-code"></i>
+    <span>{{ 'Built with Angular · Django · PostgreSQL' | t }}</span>
+  </div>
+
+</div>

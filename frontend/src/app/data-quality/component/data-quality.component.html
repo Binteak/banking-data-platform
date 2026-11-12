@@ -1,0 +1,409 @@
+<div class="data-quality-container">
+
+  <!-- DATASET SELECTION -->
+
+  <p-card class="filter-card">
+
+    <div class="filter-header">
+      <div>
+        <h2>{{ 'Select master dataset' | t }}</h2>
+        <p>{{ 'Select a country and reporting period to execute the data quality controls against.' | t }}</p>
+      </div>
+    </div>
+
+
+    <div class="filter-grid">
+
+      <!-- COUNTRY -->
+      <div class="filter-field">
+        <label>{{ 'Country' | t }}</label>
+        <p-dropdown
+          [options]="countries"
+          [(ngModel)]="selectedCountry"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'Select country' | t"
+          [showClear]="true"
+          [loading]="loading"
+          (onChange)="onCountryChange()">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <!-- REPORTING DATE -->
+      <div class="filter-field">
+        <label>{{ 'Reporting date' | t }}</label>
+        <p-dropdown
+          [options]="availableDates"
+          [(ngModel)]="selectedReportingDate"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'Select reporting date' | t"
+          [showClear]="true"
+          [disabled]="!selectedCountry">
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <!-- SELECTED DATASET -->
+      <div
+        class="dataset-info filter-field--wide"
+        *ngIf="selectedCountry && selectedReportingDate">
+        <span class="dataset-label">{{ 'SELECTED DATASET' | t }}</span>
+        <strong>{{ selectedDatasetLabel }}</strong>
+        <span>{{ 'Risk exposure master' | t }}</span>
+      </div>
+
+    </div>
+
+
+    <div class="filter-actions filter-actions--stacked">
+      <button
+        pButton
+        [label]="'Run Quality Checks' | t"
+        class="corporate-button filter-action-primary"
+        icon="pi pi-shield"
+        [loading]="running"
+        [disabled]="!selectedCountry || !selectedReportingDate"
+        (click)="runChecks()">
+      </button>
+    </div>
+
+  </p-card>
+
+  <!-- SUMMARY -->
+
+  <div
+    class="summary-grid"
+    *ngIf="hasExecuted">
+
+
+    <div class="summary-card">
+
+      <span class="summary-label">
+        {{ 'Records analysed' | t }}
+      </span>
+
+      <strong>
+        {{ recordsChecked | number }}
+      </strong>
+
+      <span class="summary-description">
+        {{ 'Exposure records evaluated' | t }}
+      </span>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <span class="summary-label">
+        {{ 'Checks executed' | t }}
+      </span>
+
+      <strong>
+        {{ checksExecuted }}
+      </strong>
+
+      <span class="summary-description">
+        {{ 'Validation rules' | t }}
+      </span>
+
+    </div>
+
+
+    <div class="summary-card success">
+
+      <span class="summary-label">
+        {{ 'Checks passed' | t }}
+      </span>
+
+      <strong>
+        {{ checksPassed }}
+      </strong>
+
+      <span class="summary-description">
+        {{ 'No issues detected' | t }}
+      </span>
+
+    </div>
+
+
+    <div
+      class="summary-card"
+      [class.danger]="checksFailed > 0">
+
+      <span class="summary-label">
+        {{ 'Checks failed' | t }}
+      </span>
+
+      <strong>
+        {{ checksFailed }}
+      </strong>
+
+      <span class="summary-description">
+        {{ 'Requires attention' | t }}
+      </span>
+
+    </div>
+
+
+    <div class="summary-card quality">
+
+      <span class="summary-label">
+        {{ 'Quality score' | t }}
+      </span>
+
+      <strong>
+        {{ qualityScore | number:'1.1-1' }}%
+      </strong>
+
+      <span class="summary-description">
+        {{ 'Overall validation score' | t }}
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- RESULTS -->
+
+  <p-card
+    class="results-card"
+    *ngIf="hasExecuted">
+
+    <div class="section-header">
+
+      <div>
+
+        <div class="eyebrow">
+          {{ 'VALIDATION OUTPUT' | t }}
+        </div>
+
+        <h2>
+          {{ 'Validation Results' | t }}
+        </h2>
+
+        <p>
+          {{ 'Quality controls executed for' | t }}
+          <strong>
+            {{ selectedDatasetLabel }}
+          </strong>.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <p-table
+      #dt
+      [value]="results"
+      [loading]="loading"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10,25,50]"
+      [globalFilterFields]="[
+        'check_name',
+        'check_description',
+        'status',
+        'details'
+      ]"
+      styleClass="p-datatable-sm corporate-table">
+
+
+      <!-- TABLE TOOLBAR -->
+
+      <ng-template pTemplate="caption">
+
+        <div class="table-toolbar">
+
+          <div class="table-context">
+
+            <i class="pi pi-database"></i>
+
+            <span>
+              {{ selectedDatasetLabel }}
+            </span>
+
+          </div>
+
+
+          <div class="table-search">
+
+            <i class="pi pi-search"></i>
+
+            <input
+              pInputText
+              type="text"
+              [placeholder]="'Search controls...' | t"
+              (input)="dt.filterGlobal(
+                $any($event.target).value,
+                'contains'
+              )">
+
+          </div>
+
+        </div>
+
+      </ng-template>
+
+
+      <!-- TABLE HEADER -->
+
+      <ng-template pTemplate="header">
+
+        <tr>
+
+          <th>
+            {{ 'Control' | t }}
+          </th>
+
+          <th>
+            {{ 'Description' | t }}
+          </th>
+
+          <th>
+            {{ 'Status' | t }}
+          </th>
+
+          <th>
+            {{ 'Records' | t }}
+          </th>
+
+          <th>
+            {{ 'Failed' | t }}
+          </th>
+
+          <th>
+            {{ 'Execution' | t }}
+          </th>
+
+          <th>
+            {{ 'Details' | t }}
+          </th>
+
+        </tr>
+
+      </ng-template>
+
+
+      <!-- TABLE BODY -->
+
+      <ng-template
+        pTemplate="body"
+        let-result>
+
+        <tr>
+
+          <td>
+
+            <strong>
+              {{ result.check_name | t }}
+            </strong>
+
+          </td>
+
+
+          <td>
+            {{ result.check_description | t }}
+          </td>
+
+
+          <td>
+
+            <p-tag
+              [value]="result.status | t"
+              [severity]="
+                result.status === 'PASSED'
+                  ? 'success'
+                  : 'danger'
+              ">
+
+            </p-tag>
+
+          </td>
+
+
+          <td>
+            {{ result.records_checked | number }}
+          </td>
+
+
+          <td>
+
+            <span
+              [class.failure-count]="
+                result.records_failed > 0
+              ">
+
+              {{ result.records_failed | number }}
+
+            </span>
+
+          </td>
+
+
+          <td>
+
+            {{ result.execution_date
+              | date:'dd/MM/yyyy HH:mm' }}
+
+          </td>
+
+
+          <td>
+            {{ result.details | t }}
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+
+      <!-- EMPTY -->
+
+      <ng-template pTemplate="emptymessage">
+
+        <tr>
+
+          <td
+            colspan="7"
+            class="empty-message">
+
+            {{ 'No validation results available for this dataset.' | t }}
+
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
+  </p-card>
+
+
+  <!-- INITIAL STATE -->
+
+  <div
+    class="initial-state"
+    *ngIf="!hasExecuted">
+
+    <img class="illustration illustration-md" src="assets/images/illustrations/data-quality-check.svg" alt="" aria-hidden="true" />
+
+    <h3>
+      {{ 'No quality checks executed' | t }}
+    </h3>
+
+    <p>
+      {{ 'Select a country and reporting date above and run the quality controls to analyse its data quality.' | t }}
+    </p>
+
+  </div>
+
+</div>

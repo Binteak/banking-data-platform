@@ -1,0 +1,229 @@
+/* ============================================================
+   HOUSEKEEPING
+   ============================================================ */
+
+.housekeeping-container {
+
+  padding: 32px;
+
+  background: #f5f6f8;
+
+  min-height: 100vh;
+
+  color: #202124;
+
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+
+.eyebrow {
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+
+  color: #6b7280;
+
+  margin-bottom: 6px;
+
+}
+
+
+/* ============================================================
+   PRIME NG CARDS
+   ============================================================ */
+
+:host ::ng-deep .p-card {
+
+  border: 1px solid #e3e6ea;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, .04);
+
+}
+
+
+/* ============================================================
+   RESULTS
+   ============================================================ */
+
+.results-card {
+
+  margin-top: 24px;
+
+}
+
+
+.results-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 20px;
+
+}
+
+
+.results-header h2 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  color: #202124;
+
+}
+
+
+.results-header span {
+
+  display: block;
+
+  margin-top: 6px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+}
+
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+:host ::ng-deep .p-datatable {
+
+  border-top: 1px solid #e5e7eb;
+
+}
+
+
+:host ::ng-deep .p-datatable th {
+
+  white-space: nowrap;
+
+  background: #f8f9fa;
+
+  color: #374151;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: .5px;
+
+  border-bottom: 1px solid #dfe3e8;
+
+}
+
+
+:host ::ng-deep .p-datatable td {
+
+  white-space: nowrap;
+
+  font-size: 13px;
+
+  color: #374151;
+
+  padding: 14px 12px;
+
+}
+
+
+:host ::ng-deep .p-datatable tbody tr:hover {
+
+  background: #f8fafc;
+
+}
+
+
+/* ============================================================
+   CORPORATE BUTTONS
+   ============================================================ */
+
+:host ::ng-deep .corporate-button {
+  background: #e53935 !important;
+  border: 1px solid #e53935 !important;
+  color: #ffffff !important;
+}
+
+:host ::ng-deep .corporate-button:hover {
+  background: #c62828 !important;
+  border-color: #c62828 !important;
+  color: #ffffff !important;
+}
+
+:host ::ng-deep .corporate-button:focus {
+  background: #e53935 !important;
+  border-color: #e53935 !important;
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.15) !important;
+}
+
+:host ::ng-deep .corporate-button:active {
+  background: #b71c1c !important;
+  border-color: #b71c1c !important;
+}
+
+:host ::ng-deep .corporate-button:disabled {
+  background: #e5e7eb !important;
+  border-color: #e5e7eb !important;
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+/* ============================================================
+   EMPTY
+   ============================================================ */
+
+.empty-message {
+
+  text-align: center;
+
+  padding: 40px !important;
+
+  color: #6b7280;
+
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+
+@media (max-width: 700px) {
+
+  .housekeeping-container {
+
+    padding: 20px;
+
+  }
+
+
+  .results-header {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+  }
+
+}

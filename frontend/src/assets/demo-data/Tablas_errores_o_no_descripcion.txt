@@ -1,0 +1,32 @@
+CSV DE DEMOSTRACIÓN — qué pasa al subir cada archivo
+====================================================
+
+Estado inicial de la demo (backend/data/seed): PE 09/2022 y ES 03/2026 ya cargados (10 registros).
+Al subir un CSV, sus filas se AÑADEN al JSON del backend; Housekeeping permite borrarlas.
+Data Quality se ejecuta por país + fecha de reporte, sobre todas las filas de ese conjunto.
+
+
+| Carpeta  | CSV                                          | Filas | Upload Data                  | Data Quality (solo ese archivo)                              |
+| -------- | -------------------------------------------- | ----- | ---------------------------- | ------------------------------------------------------------ |
+| valid    | maestro_PE_09_2022.csv                       | 5     | ya cargado al inicio         | ✅ 5/5 controles OK (100 %)                                    |
+| valid    | maestro_ES_03_2026.csv                       | 5     | ya cargado al inicio         | ✅ 5/5 controles OK (100 %)                                    |
+| valid    | maestro_ES_06_2026.csv                       | 5     | ✅ se carga                   | ✅ 5/5 controles OK (100 %)                                    |
+| valid    | maestro_CO_03_2025.csv                       | 10    | ✅ se carga                   | ✅ 5/5 controles OK (100 %)                                    |
+| invalid  | maestro_ES_03_2026_ERROR.csv                 | 5     | ✅ se carga                   | ❌ PD > 1, LGD < 0, EAD > exposición, default sin fecha       |
+| invalid  | maestro_ES_06_2026_ERROR.csv                 | 5     | ✅ se carga                   | ❌ PD < 0, LGD > 1, EAD > exposición, default sin fecha       |
+| invalid  | maestro_PE_09_2022_ERROR.csv                 | 5     | ✅ se carga                   | ❌ PD > 1, LGD < 0, EAD > exposición, default sin fecha       |
+| invalid  | maestro_CO_03_2025_ERROR.csv                 | 10    | ❌ RECHAZADO entero           | — (no se guarda nada: "Row 5: required field 'entity_id' is empty") |
+
+
+Notas
+-----
+- Los *_ERROR de ES y PE tienen valores con formato correcto, así que se cargan; los errores son de
+  negocio y los detecta Data Quality (4 de los 5 controles fallan -> calidad 20 %).
+- maestro_CO_03_2025_ERROR.csv tiene una fila sin entity_id (campo obligatorio): la subida es
+  todo o nada, así que no se carga ninguna fila. Además contiene PD 1.30 y -0.03, LGD 1.40,
+  EAD > exposición, un default sin fecha y una fecha de default sin default.
+- Cada *_ERROR comparte país y fecha con su CSV válido. Si subes los dos, Data Quality analiza
+  las 10 filas juntas y marca el conjunto con errores; para volver a un conjunto limpio, borra las
+  filas "... Error" desde Housekeeping.
+- Audit Reporting marca el informe como "validated" solo si el último Data Quality de ese país y
+  fecha no tiene fallos.

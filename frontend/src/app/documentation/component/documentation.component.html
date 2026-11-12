@@ -1,0 +1,199 @@
+<div class="doc-layout">
+
+  <!-- ===================================================== -->
+  <!-- MENÚ LATERAL                                          -->
+  <!-- ===================================================== -->
+  <aside class="doc-nav" [attr.aria-label]="tx(L.docs)">
+
+    <div class="doc-nav-header">
+      <i class="pi pi-book"></i>
+      <span>{{ tx(L.docs) }}</span>
+    </div>
+
+    <div class="doc-search">
+      <i class="pi pi-search"></i>
+      <input type="search" [(ngModel)]="search" [placeholder]="tx(L.search)" [attr.aria-label]="tx(L.search)" />
+    </div>
+
+    <nav class="doc-nav-groups">
+      <div class="doc-nav-group" *ngFor="let group of groups">
+        <span class="doc-nav-group-label">{{ tx(group.label) }}</span>
+        <button type="button"
+                *ngFor="let section of group.sections"
+                class="doc-nav-item"
+                [class.active]="section === selected"
+                [attr.aria-current]="section === selected ? 'page' : null"
+                (click)="select(section)">
+          <i [class]="section.icon"></i>
+          <span>{{ tx(section.title) }}</span>
+        </button>
+      </div>
+
+      <p class="doc-nav-empty" *ngIf="!groups.length">{{ tx(L.noResults) }}</p>
+    </nav>
+
+    <button type="button" class="doc-btn doc-btn-dark doc-btn-block"
+            [disabled]="exporting !== null"
+            (click)="downloadAll()">
+      <i class="pi" [class.pi-spin]="exporting === 'all'" [class.pi-spinner]="exporting === 'all'" [class.pi-file-pdf]="exporting !== 'all'"></i>
+      {{ tx(L.downloadAll) }}
+    </button>
+  </aside>
+
+
+  <!-- ===================================================== -->
+  <!-- CONTENIDO                                             -->
+  <!-- ===================================================== -->
+  <article class="doc-content">
+
+    <!-- Cabecera de la sección -->
+    <header class="doc-hero">
+      <div class="doc-hero-text">
+        <span class="doc-eyebrow">{{ tx(selected.group) }}</span>
+        <h2><i [class]="selected.icon"></i> {{ tx(selected.title) }}</h2>
+        <p>{{ tx(selected.summary) }}</p>
+      </div>
+      <div class="doc-hero-actions">
+        <a *ngIf="selected.route" class="doc-btn doc-btn-light" [routerLink]="selected.route">
+          <i class="pi pi-external-link"></i> {{ tx(L.openScreen) }}
+        </a>
+        <button type="button" class="doc-btn doc-btn-primary"
+                [disabled]="exporting !== null"
+                (click)="downloadSection()">
+          <i class="pi" [class.pi-spin]="exporting === 'section'" [class.pi-spinner]="exporting === 'section'" [class.pi-file-pdf]="exporting !== 'section'"></i>
+          {{ tx(L.downloadSection) }}
+        </button>
+      </div>
+    </header>
+
+    <!-- Objetivo -->
+    <section class="doc-card">
+      <h3>{{ tx(L.purpose) }}</h3>
+      <p class="doc-lead">{{ tx(selected.purpose) }}</p>
+    </section>
+
+    <!-- Cómo se usa -->
+    <section class="doc-card" *ngIf="selected.steps?.length">
+      <h3>{{ tx(L.howTo) }}</h3>
+      <ol class="doc-steps">
+        <li *ngFor="let step of selected.steps">{{ tx(step) }}</li>
+      </ol>
+    </section>
+
+    <!-- Reglas / fórmulas -->
+    <section class="doc-card" *ngIf="selected.rules?.rows?.length">
+      <h3>{{ tx(selected.rules!.title) }}</h3>
+      <div class="doc-table-wrap">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>{{ tx(L.name) }}</th>
+              <th>{{ tx(L.formula) }}</th>
+              <th>{{ tx(L.description) }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rule of selected.rules!.rows">
+              <td class="doc-strong" [attr.data-label]="tx(L.name)">{{ tx(rule.name) }}</td>
+              <td [attr.data-label]="tx(L.formula)"><code class="doc-formula">{{ rule.formula }}</code></td>
+              <td [attr.data-label]="tx(L.description)">{{ tx(rule.description) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Variables / columnas -->
+    <section class="doc-card" *ngIf="selected.fields?.rows?.length">
+      <h3>{{ tx(selected.fields!.title) }}</h3>
+      <div class="doc-table-wrap">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>{{ tx(L.column) }}</th>
+              <th>{{ tx(L.type) }}</th>
+              <th>{{ tx(L.required) }}</th>
+              <th>{{ tx(L.description) }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let field of selected.fields!.rows">
+              <td [attr.data-label]="tx(L.column)"><code class="doc-code">{{ field.name }}</code></td>
+              <td class="doc-nowrap" [attr.data-label]="tx(L.type)">{{ field.type }}</td>
+              <td [attr.data-label]="tx(L.required)">
+                <span class="doc-pill" [class.doc-pill-on]="field.required">
+                  {{ tx(field.required ? L.yes : L.no) }}
+                </span>
+              </td>
+              <td [attr.data-label]="tx(L.description)">{{ tx(field.description) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Persistencia -->
+    <section class="doc-card" *ngIf="selected.persistence?.length">
+      <h3>{{ tx(L.persistence) }}</h3>
+      <ul class="doc-list">
+        <li *ngFor="let item of selected.persistence">{{ tx(item) }}</li>
+      </ul>
+    </section>
+
+    <!-- API -->
+    <section class="doc-card" *ngIf="selected.endpoints?.length">
+      <h3>{{ tx(L.api) }}</h3>
+      <div class="doc-table-wrap">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>{{ tx(L.method) }}</th>
+              <th>{{ tx(L.endpoint) }}</th>
+              <th>{{ tx(L.access) }}</th>
+              <th>{{ tx(L.description) }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let endpoint of selected.endpoints">
+              <td [attr.data-label]="tx(L.method)"><span class="doc-method" [ngClass]="'doc-method-' + endpoint.method.toLowerCase()">{{ endpoint.method }}</span></td>
+              <td [attr.data-label]="tx(L.endpoint)"><code class="doc-code">{{ endpoint.path }}</code></td>
+              <td class="doc-nowrap" [attr.data-label]="tx(L.access)">
+                <i class="pi" [ngClass]="endpoint.role === 'DataAdmin' ? 'pi-lock' : (endpoint.role === 'Public' ? 'pi-globe' : 'pi-user')"></i>
+                {{ tx(ROLE_LABEL[endpoint.role]) }}
+              </td>
+              <td [attr.data-label]="tx(L.description)">{{ tx(endpoint.description) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Bloques adicionales -->
+    <section class="doc-card" *ngFor="let block of selected.blocks">
+      <h3>{{ tx(block.title) }}</h3>
+      <ul class="doc-list">
+        <li *ngFor="let item of block.items">{{ tx(item) }}</li>
+      </ul>
+    </section>
+
+    <!-- Anterior / siguiente -->
+    <nav class="doc-pager">
+      <button type="button" class="doc-pager-btn" *ngIf="previous" (click)="select(previous)">
+        <i class="pi pi-arrow-left"></i>
+        <span>
+          <small>{{ tx(L.previous) }}</small>
+          {{ tx(previous.title) }}
+        </span>
+      </button>
+      <span class="doc-pager-spacer"></span>
+      <button type="button" class="doc-pager-btn doc-pager-next" *ngIf="next" (click)="select(next)">
+        <span>
+          <small>{{ tx(L.next) }}</small>
+          {{ tx(next.title) }}
+        </span>
+        <i class="pi pi-arrow-right"></i>
+      </button>
+    </nav>
+
+  </article>
+</div>

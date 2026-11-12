@@ -1,0 +1,440 @@
+<div class="housekeeping-container">
+
+  <!-- FILTERS -->
+
+  <p-card class="filter-card">
+
+    <div class="filter-header">
+      <div>
+        <h2>{{ 'Search Risk Exposures' | t }}</h2>
+        <p>{{ 'Use the filters to identify records.' | t }}</p>
+      </div>
+    </div>
+
+
+    <div class="filter-grid" [class.is-expanded]="showAllFilters">
+
+      <div class="filter-field">
+        <label>{{ 'Reporting Date' | t }}</label>
+        <p-dropdown
+          [options]="reportingDates"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="filters.reporting_date"
+          [placeholder]="'All dates' | t"
+          [showClear]="true">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Entity ID' | t }}</label>
+        <input
+          pInputText
+          type="text"
+          [placeholder]="'ENT-0001' | t"
+          [(ngModel)]="filters.entity_id"
+          (keyup.enter)="search()">
+      </div>
+
+      <div class="filter-field">
+        <label>{{ 'Entity Name' | t }}</label>
+        <input
+          pInputText
+          type="text"
+          [placeholder]="'Entity name' | t"
+          [(ngModel)]="filters.entity_name"
+          (keyup.enter)="search()">
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Country' | t }}</label>
+        <p-dropdown
+          [options]="countries"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="filters.country"
+          [placeholder]="'All countries' | t"
+          [showClear]="true">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Portfolio' | t }}</label>
+        <p-dropdown
+          [options]="portfolios"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="filters.portfolio"
+          [placeholder]="'All portfolios' | t"
+          [showClear]="true">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Product Type' | t }}</label>
+        <p-dropdown
+          [options]="productTypes"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="filters.product_type"
+          [placeholder]="'All products' | t"
+          [showClear]="true">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Risk Stage' | t }}</label>
+        <p-dropdown
+          [options]="riskStages"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="filters.risk_stage"
+          [placeholder]="'All stages' | t"
+          [showClear]="true">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Rating' | t }}</label>
+        <input
+          pInputText
+          type="text"
+          [placeholder]="'AAA / AA / A / BBB' | t"
+          [(ngModel)]="filters.rating"
+          (keyup.enter)="search()">
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Default' | t }}</label>
+        <p-dropdown
+          [options]="defaultOptions"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="filters.default_flag"
+          [placeholder]="'All' | t"
+          [showClear]="true">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Data Source' | t }}</label>
+        <p-dropdown
+          [options]="dataSources"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="filters.data_source"
+          [placeholder]="'All sources' | t"
+          [showClear]="true">
+          <!-- La etiqueta de cada opción pasa por el traductor -->
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <!-- Solo en móvil: muestra u oculta los filtros secundarios -->
+      <button
+        type="button"
+        class="filter-more"
+        [attr.aria-expanded]="showAllFilters"
+        (click)="showAllFilters = !showAllFilters">
+        <i class="pi pi-sliders-h"></i>
+        {{ (showAllFilters ? 'Fewer filters' : 'More filters') | t }}
+        <span class="filter-more-count" *ngIf="secondaryFilterCount">{{ secondaryFilterCount }}</span>
+        <i class="pi filter-more-chevron" [ngClass]="showAllFilters ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+      </button>
+
+    </div>
+
+
+    <div class="filter-actions">
+
+      <button
+        pButton
+        [label]="'Clear Filters' | t"
+        icon="pi pi-filter-slash"
+        class="p-button-secondary"
+        (click)="clearFilters()">
+      </button>
+
+      <button
+        pButton
+        [label]="'Search' | t"
+        icon="pi pi-search"
+        class="corporate-button filter-action-primary"
+        (click)="search()"
+        [loading]="loading">
+      </button>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- RESULTS -->
+
+  <p-card class="results-card">
+
+    <div class="results-header">
+
+      <div>
+
+        <h2>
+          {{ 'Risk Exposures' | t }}
+        </h2>
+
+        <span>
+          {{ records.length }} {{ 'records found' | t }}
+        </span>
+
+      </div>
+
+
+    </div>
+
+
+    <!-- Barra de acciones: aparece al seleccionar filas -->
+
+    <div class="selection-bar" *ngIf="selectedRecords.length">
+
+      <i class="pi pi-check-square"></i>
+
+      <span>{{ selectedRecords.length }} {{ 'selected' | t }}</span>
+
+      <span class="spacer"></span>
+
+      <button
+        pButton
+        type="button"
+        [label]="'Clear' | t"
+        class="p-button-text p-button-sm"
+        (click)="selectedRecords = []">
+      </button>
+
+      <button
+        pButton
+        type="button"
+        [label]="'Delete' | t"
+        icon="pi pi-trash"
+        class="p-button-danger p-button-sm"
+        [disabled]="!canWrite"
+        [title]="canWrite ? '' : ('Read-only access (Analyst role): uploading and deleting data requires the DataAdmin role.' | t)"
+        (click)="deleteSelected()">
+      </button>
+
+    </div>
+
+
+    <!-- ================= ESCRITORIO: TABLA ================= -->
+
+    <p-table
+      class="desktop-table"
+      [value]="records"
+      [(selection)]="selectedRecords"
+      dataKey="id"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10,25,50]"
+      [showCurrentPageReport]="true"
+      [currentPageReportTemplate]="'{first}–{last} of {totalRecords}' | t"
+      [scrollable]="true"
+      scrollHeight="550px"
+      [loading]="loading"
+      styleClass="p-datatable-sm data-table">
+
+
+      <ng-template
+        pTemplate="header">
+
+        <tr>
+
+          <th pFrozenColumn style="width: 3rem">
+            <p-tableHeaderCheckbox />
+          </th>
+
+          <th pFrozenColumn>{{ 'Entity' | t }}</th>
+          <th>{{ 'Date' | t }}</th>
+          <th>{{ 'Country' | t }}</th>
+          <th>{{ 'Portfolio' | t }}</th>
+          <th>{{ 'Product' | t }}</th>
+          <th class="num">{{ 'Exposure' | t }}</th>
+          <th class="num">{{ 'EAD' | t }}</th>
+          <th class="num">{{ 'PD' | t }}</th>
+          <th class="num">{{ 'LGD' | t }}</th>
+          <th>{{ 'Stage' | t }}</th>
+          <th>{{ 'Rating' | t }}</th>
+          <th>{{ 'Default' | t }}</th>
+          <th>{{ 'Source' | t }}</th>
+          <th class="num">{{ 'ID' | t }}</th>
+
+        </tr>
+
+      </ng-template>
+
+
+      <ng-template
+        pTemplate="body"
+        let-record>
+
+        <tr>
+
+          <td pFrozenColumn>
+            <p-tableCheckbox [value]="record" />
+          </td>
+
+          <td pFrozenColumn>
+            <strong>{{ record.entity_id }}</strong>
+            <span class="cell-sub">{{ record.entity_name }}</span>
+          </td>
+
+          <td>{{ record.reporting_date | date:'dd/MM/yyyy' }}</td>
+
+          <td>{{ record.country }}</td>
+
+          <td>{{ record.portfolio }}</td>
+
+          <td>{{ record.product_type }}</td>
+
+          <td class="num">{{ record.exposure_amount | number:'1.0-0' }}</td>
+
+          <td class="num">{{ record.ead_amount | number:'1.0-0' }}</td>
+
+          <td class="num">{{ record.pd | percent:'1.2-2' }}</td>
+
+          <td class="num">{{ record.lgd | percent:'1.0-0' }}</td>
+
+          <td>
+            <span [class]="stageClass(record.risk_stage)">{{ stageLabel(record.risk_stage) }}</span>
+          </td>
+
+          <td>
+            <span class="rating-chip">{{ record.rating || '-' }}</span>
+          </td>
+
+          <td>
+            <span class="badge" [ngClass]="record.default_flag ? 'badge-red' : 'badge-grey'">
+              {{ (record.default_flag ? 'Yes' : 'No') | t }}
+            </span>
+          </td>
+
+          <td>{{ record.data_source }}</td>
+
+          <td class="num">{{ record.id }}</td>
+
+        </tr>
+
+      </ng-template>
+
+
+      <ng-template
+        pTemplate="emptymessage">
+
+        <tr>
+
+          <td colspan="15">
+
+            <div class="empty-state">
+
+              <img class="illustration illustration-sm" src="assets/images/illustrations/search-empty.svg" alt="" aria-hidden="true" />
+
+              <p>{{ 'No records found for these filters.' | t }}</p>
+
+              <button
+                pButton
+                type="button"
+                [label]="'Clear filters' | t"
+                class="p-button-secondary p-button-sm"
+                (click)="clearFilters()">
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
+
+    <!-- ================= MÓVIL: TARJETAS ================= -->
+
+    <div class="mobile-cards">
+
+      <div
+        class="row-card"
+        *ngFor="let record of records.slice(0, mobileLimit)"
+        [style.border-color]="isSelected(record) ? '#e53935' : null">
+
+        <div class="row-card-top">
+
+          <div>
+            <strong>{{ record.entity_name }}</strong>
+            <span class="cell-sub">{{ record.entity_id }} · {{ record.country }} · {{ record.reporting_date | date:'dd/MM/yyyy' }}</span>
+          </div>
+
+          <span class="rating-chip">{{ record.rating || '-' }}</span>
+
+        </div>
+
+        <div class="row-card-amount">
+          {{ record.exposure_amount | number:'1.0-0' }}
+        </div>
+
+        <div class="row-card-tags">
+          <span [class]="stageClass(record.risk_stage)">{{ stageLabel(record.risk_stage) }}</span>
+          <span class="badge badge-grey">{{ record.product_type }}</span>
+          <span class="badge" [ngClass]="record.default_flag ? 'badge-red' : 'badge-grey'">
+            {{ 'Default' | t }}: {{ (record.default_flag ? 'Yes' : 'No') | t }}
+          </span>
+        </div>
+
+        <button type="button" class="row-card-link" (click)="toggleSelection(record)">
+          <i class="pi" [ngClass]="isSelected(record) ? 'pi-check-square' : 'pi-stop'"></i>
+          {{ (isSelected(record) ? 'Selected' : 'Select') | t }}
+        </button>
+
+      </div>
+
+      <div class="empty-state" *ngIf="!records.length && !loading">
+        <img class="illustration illustration-sm" src="assets/images/illustrations/search-empty.svg" alt="" aria-hidden="true" />
+        <p>{{ 'No records found for these filters.' | t }}</p>
+      </div>
+
+      <button
+        pButton
+        type="button"
+        class="p-button-secondary show-more"
+        *ngIf="records.length > mobileLimit"
+        label="{{ 'Show more' | t }} ({{ records.length - mobileLimit }})"
+        (click)="mobileLimit = mobileLimit + 10">
+      </button>
+
+    </div>
+
+  </p-card>
+
+</div>
+
+
+<p-confirmDialog />
+
+<p-toast />

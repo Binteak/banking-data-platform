@@ -1,0 +1,608 @@
+<div class="data-explorer-container">
+
+  <!-- ===================================================== -->
+  <!-- FILTERS -->
+  <!-- ===================================================== -->
+
+  <p-card class="filter-card">
+
+    <div class="filter-header">
+
+      <div>
+        <h2>{{ 'Filters' | t }}</h2>
+        <p>{{ 'Filter the risk exposure dataset' | t }}</p>
+      </div>
+
+      <div class="filter-header-tools">
+        <button
+          pButton
+          type="button"
+          [label]="'Clear Filters' | t"
+          icon="pi pi-filter-slash"
+          class="p-button-text p-button-sm"
+          [attr.title]="'Clear Filters' | t"
+          [attr.aria-label]="'Clear Filters' | t"
+          [disabled]="!activeFilters.length"
+          (click)="clearFilters()">
+        </button>
+      </div>
+
+    </div>
+
+
+    <div class="filter-grid" [class.is-expanded]="showAllFilters">
+
+      <div class="filter-field filter-field--wide">
+        <label>{{ 'Search' | t }}</label>
+        <input
+          pInputText
+          type="text"
+          [placeholder]="'Entity, country, portfolio...' | t"
+          [(ngModel)]="searchText"
+          (input)="applyFilters()">
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Reporting Date' | t }}</label>
+        <p-dropdown
+          [options]="reportingDates"
+          [(ngModel)]="selectedReportingDate"
+          [placeholder]="'All dates' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Country' | t }}</label>
+        <p-dropdown
+          [options]="countries"
+          [(ngModel)]="selectedCountry"
+          [placeholder]="'All countries' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Portfolio' | t }}</label>
+        <p-dropdown
+          [options]="portfolios"
+          [(ngModel)]="selectedPortfolio"
+          [placeholder]="'All portfolios' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Product Type' | t }}</label>
+        <p-dropdown
+          [options]="productTypes"
+          [(ngModel)]="selectedProductType"
+          [placeholder]="'All products' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Risk Stage' | t }}</label>
+        <p-dropdown
+          [options]="riskStages"
+          [(ngModel)]="selectedRiskStage"
+          [placeholder]="'All stages' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Rating' | t }}</label>
+        <p-dropdown
+          [options]="ratings"
+          [(ngModel)]="selectedRating"
+          [placeholder]="'All ratings' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Default' | t }}</label>
+        <p-dropdown
+          [options]="defaultOptions"
+          [(ngModel)]="selectedDefault"
+          optionLabel="label"
+          optionValue="value"
+          [placeholder]="'All' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+          <ng-template pTemplate="selectedItem" let-option>{{ option?.label | t }}</ng-template>
+          <ng-template pTemplate="item" let-option>{{ option.label | t }}</ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="filter-field filter-field--secondary">
+        <label>{{ 'Data Source' | t }}</label>
+        <p-dropdown
+          [options]="dataSources"
+          [(ngModel)]="selectedDataSource"
+          [placeholder]="'All sources' | t"
+          [showClear]="true"
+          (onChange)="applyFilters()">
+        </p-dropdown>
+      </div>
+
+      <!-- Solo en móvil: muestra u oculta los filtros secundarios -->
+      <button
+        type="button"
+        class="filter-more"
+        [attr.aria-expanded]="showAllFilters"
+        (click)="showAllFilters = !showAllFilters">
+        <i class="pi pi-sliders-h"></i>
+        {{ (showAllFilters ? 'Fewer filters' : 'More filters') | t }}
+        <span class="filter-more-count" *ngIf="secondaryFilterCount">{{ secondaryFilterCount }}</span>
+        <i class="pi filter-more-chevron" [ngClass]="showAllFilters ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+      </button>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- SUMMARY -->
+  <!-- ===================================================== -->
+  <div class="summary-grid">
+
+
+    <p-card>
+
+      <div class="summary-card">
+
+        <span class="summary-label">
+          {{ 'Records' | t }}
+        </span>
+
+        <span class="summary-value">
+          {{ totalRecords }}
+        </span>
+
+        <span class="summary-description">
+          {{ 'Filtered records' | t }}
+        </span>
+
+      </div>
+
+    </p-card>
+
+
+    <p-card>
+
+      <div class="summary-card">
+
+        <span class="summary-label">
+          {{ 'Exposure' | t }}
+        </span>
+
+        <span class="summary-value">
+          {{ totalExposure | number:'1.0-0' }}
+        </span>
+
+        <span class="summary-description">
+          {{ 'Total exposure' | t }}
+        </span>
+
+      </div>
+
+    </p-card>
+
+
+    <p-card>
+
+      <div class="summary-card">
+
+        <span class="summary-label">
+          {{ 'EAD' | t }}
+        </span>
+
+        <span class="summary-value">
+          {{ totalEad | number:'1.0-0' }}
+        </span>
+
+        <span class="summary-description">
+          {{ 'Exposure at default' | t }}
+        </span>
+
+      </div>
+
+    </p-card>
+
+
+    <p-card>
+
+      <div class="summary-card">
+
+        <span class="summary-label">
+          {{ 'Defaults' | t }}
+        </span>
+
+        <span class="summary-value">
+          {{ defaultedRecords }}
+        </span>
+
+        <span class="summary-description">
+          {{ 'Defaulted exposures' | t }}
+        </span>
+
+      </div>
+
+    </p-card>
+
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- LOADING -->
+  <!-- ===================================================== -->
+
+  <p-card *ngIf="loading">
+
+    <div class="skeleton-row" *ngFor="let i of [1, 2, 3, 4, 5, 6]"></div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- ERROR -->
+  <!-- ===================================================== -->
+
+  <div
+    class="error-container"
+    *ngIf="errorMessage">
+
+    <i class="pi pi-exclamation-triangle"></i>
+
+    <span>
+      {{ errorMessage | t }}
+    </span>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- TABLE -->
+  <!-- ===================================================== -->
+
+  <p-card
+    *ngIf="!loading && !errorMessage">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          {{ 'Risk Exposures' | t }}
+        </h2>
+
+        <span>
+          {{ 'Showing' | t }} {{ filteredData.length }}
+          {{ 'of' | t }} {{ tableData.length }} {{ 'records' | t }}
+        </span>
+
+      </div>
+
+
+      <div class="table-actions">
+
+        <button
+          pButton
+          type="button"
+          icon="pi pi-refresh"
+          class="p-button-text p-button-secondary table-action-icon"
+          [attr.title]="'Refresh' | t"
+          [attr.aria-label]="'Refresh' | t"
+          [loading]="loading"
+          (click)="refreshData()">
+        </button>
+
+        <button
+          pButton
+          type="button"
+          [label]="'Export CSV' | t"
+          icon="pi pi-download"
+          class="p-button-secondary table-action-export"
+          [attr.title]="'Export filtered data' | t"
+          [attr.aria-label]="'Export filtered data' | t"
+          (click)="exportCSV()"
+          [disabled]="!filteredData.length">
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- Filtros activos -->
+
+    <div class="filter-chips" *ngIf="activeFilters.length">
+
+      <span class="filter-chip" *ngFor="let filter of activeFilters">
+
+        {{ filter.name | t }}: {{ filter.value | t }}
+
+        <button type="button" (click)="removeFilter(filter.key)" aria-label="Remove filter">
+          <i class="pi pi-times" style="font-size: .6rem"></i>
+        </button>
+
+      </span>
+
+    </div>
+
+
+    <!-- ================= ESCRITORIO: TABLA ================= -->
+
+    <p-table
+      class="desktop-table"
+      [value]="filteredData"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [showCurrentPageReport]="true"
+      [currentPageReportTemplate]="'{first}–{last} of {totalRecords}' | t"
+      [scrollable]="true"
+      scrollHeight="520px"
+      styleClass="p-datatable-sm data-table">
+
+
+      <!-- HEADER -->
+
+      <ng-template pTemplate="header">
+
+        <tr>
+
+          <th pFrozenColumn>{{ 'Entity' | t }}</th>
+
+          <th>{{ 'Reporting Date' | t }}</th>
+
+          <th>{{ 'Country' | t }}</th>
+
+          <th>{{ 'Portfolio' | t }}</th>
+
+          <th>{{ 'Product' | t }}</th>
+
+          <th class="num">{{ 'Exposure' | t }}</th>
+
+          <th class="num">{{ 'EAD' | t }}</th>
+
+          <th class="num">{{ 'PD' | t }}</th>
+
+          <th>{{ 'LGD' | t }}</th>
+
+          <th>{{ 'Stage' | t }}</th>
+
+          <th>{{ 'Rating' | t }}</th>
+
+          <th>{{ 'Default' | t }}</th>
+
+        </tr>
+
+      </ng-template>
+
+
+      <!-- BODY -->
+
+      <ng-template
+        pTemplate="body"
+        let-row>
+
+        <tr class="clickable-row" (click)="openDetail(row)">
+
+          <td pFrozenColumn>
+
+            <strong>{{ row.entityId }}</strong>
+
+            <span class="cell-sub">{{ row.entityName }}</span>
+
+          </td>
+
+          <td>{{ row.reportingDate | date:'dd/MM/yyyy' }}</td>
+
+          <td>{{ row.country }}</td>
+
+          <td>{{ row.portfolio }}</td>
+
+          <td>{{ row.productType }}</td>
+
+          <td class="num">
+            {{ row.exposureAmount | number:'1.0-0' }}
+            <span class="currency">{{ row.currency }}</span>
+          </td>
+
+          <td class="num">
+            {{ row.eadAmount | number:'1.0-0' }}
+            <span class="currency">{{ row.currency }}</span>
+          </td>
+
+          <td class="num">{{ row.pd | percent:'1.2-2' }}</td>
+
+          <td>
+            <span class="mini-bar"><span [style.width.%]="row.lgd * 100"></span></span>
+            {{ row.lgd | percent:'1.0-0' }}
+          </td>
+
+          <td>
+            <span [class]="stageClass(row.riskStage)">{{ stageLabel(row.riskStage) }}</span>
+          </td>
+
+          <td>
+            <span class="rating-chip">{{ row.rating || '-' }}</span>
+          </td>
+
+          <td>
+            <span class="badge" [ngClass]="row.defaultFlag ? 'badge-red' : 'badge-grey'">
+              {{ (row.defaultFlag ? 'Yes' : 'No') | t }}
+            </span>
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+
+      <!-- TOTALS -->
+
+      <ng-template pTemplate="footer">
+
+        <tr *ngIf="filteredData.length">
+
+          <td pFrozenColumn>{{ 'Total' | t }} ({{ filteredData.length }})</td>
+
+          <td colspan="4"></td>
+
+          <td class="num">{{ totalExposure | number:'1.0-0' }}</td>
+
+          <td class="num">{{ totalEad | number:'1.0-0' }}</td>
+
+          <td class="num">{{ averagePd | percent:'1.2-2' }}</td>
+
+          <td>{{ 'avg' | t }} {{ averageLgd | percent:'1.0-0' }}</td>
+
+          <td colspan="3"></td>
+
+        </tr>
+
+      </ng-template>
+
+
+      <!-- EMPTY -->
+
+      <ng-template pTemplate="emptymessage">
+
+        <tr>
+
+          <td colspan="12">
+
+            <div class="empty-state">
+
+              <img class="illustration illustration-sm" src="assets/images/illustrations/search-empty.svg" alt="" aria-hidden="true" />
+
+              <p>{{ 'No records match the selected filters.' | t }}</p>
+
+              <button
+                pButton
+                type="button"
+                [label]="'Clear filters' | t"
+                class="p-button-secondary p-button-sm"
+                (click)="clearFilters()">
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
+
+    <!-- ================= MÓVIL: TARJETAS ================= -->
+
+    <div class="mobile-cards">
+
+      <div class="row-card" *ngFor="let row of filteredData.slice(0, mobileLimit)">
+
+        <div class="row-card-top">
+
+          <div>
+            <strong>{{ row.entityName }}</strong>
+            <span class="cell-sub">{{ row.entityId }} · {{ row.country }} · {{ row.productType }}</span>
+          </div>
+
+          <span class="rating-chip">{{ row.rating || '-' }}</span>
+
+        </div>
+
+        <div class="row-card-amount">
+          {{ row.exposureAmount | number:'1.0-0' }}
+          <span class="currency">{{ row.currency }}</span>
+        </div>
+
+        <div class="row-card-tags">
+          <span [class]="stageClass(row.riskStage)">{{ stageLabel(row.riskStage) }}</span>
+          <span class="badge" [ngClass]="row.defaultFlag ? 'badge-red' : 'badge-grey'">
+            {{ 'Default' | t }}: {{ (row.defaultFlag ? 'Yes' : 'No') | t }}
+          </span>
+          <span class="badge badge-grey">PD {{ row.pd | percent:'1.1-1' }}</span>
+        </div>
+
+        <button type="button" class="row-card-link" (click)="openDetail(row)">
+          {{ 'View detail' | t }} <i class="pi pi-arrow-right" style="font-size: .7rem"></i>
+        </button>
+
+      </div>
+
+      <div class="empty-state" *ngIf="!filteredData.length">
+        <img class="illustration illustration-sm" src="assets/images/illustrations/search-empty.svg" alt="" aria-hidden="true" />
+        <p>{{ 'No records match the selected filters.' | t }}</p>
+      </div>
+
+      <button
+        pButton
+        type="button"
+        class="p-button-secondary show-more"
+        *ngIf="filteredData.length > mobileLimit"
+        label="{{ 'Show more' | t }} ({{ filteredData.length - mobileLimit }})"
+        (click)="mobileLimit = mobileLimit + 10">
+      </button>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- DETAIL PANEL -->
+  <!-- ===================================================== -->
+
+  <p-sidebar
+    [(visible)]="showDetail"
+    [position]="detailPosition"
+    styleClass="detail-sidebar">
+
+    <ng-template pTemplate="header">
+      <strong>{{ 'Exposure detail' | t }}</strong>
+    </ng-template>
+
+    <div *ngIf="selectedRow">
+
+      <h3 style="margin: 0">{{ selectedRow.entityName }}</h3>
+
+      <span class="cell-sub" style="margin-bottom: 12px">{{ selectedRow.entityId }} · ID {{ selectedRow.id }}</span>
+
+      <dl class="detail-list">
+        <div><dt>{{ 'Reporting date' | t }}</dt><dd>{{ selectedRow.reportingDate | date:'dd/MM/yyyy' }}</dd></div>
+        <div><dt>{{ 'Country' | t }}</dt><dd>{{ selectedRow.country }}</dd></div>
+        <div><dt>{{ 'Portfolio' | t }}</dt><dd>{{ selectedRow.portfolio }}</dd></div>
+        <div><dt>{{ 'Product' | t }}</dt><dd>{{ selectedRow.productType }}</dd></div>
+        <div><dt>{{ 'Exposure' | t }}</dt><dd>{{ selectedRow.exposureAmount | number:'1.0-2' }} {{ selectedRow.currency }}</dd></div>
+        <div><dt>{{ 'EAD' | t }}</dt><dd>{{ selectedRow.eadAmount | number:'1.0-2' }} {{ selectedRow.currency }}</dd></div>
+        <div><dt>{{ 'PD' | t }}</dt><dd>{{ selectedRow.pd | percent:'1.2-2' }}</dd></div>
+        <div><dt>{{ 'LGD' | t }}</dt><dd>{{ selectedRow.lgd | percent:'1.2-2' }}</dd></div>
+        <div><dt>{{ 'Stage' | t }}</dt><dd><span [class]="stageClass(selectedRow.riskStage)">{{ stageLabel(selectedRow.riskStage) }}</span></dd></div>
+        <div><dt>{{ 'Rating' | t }}</dt><dd>{{ selectedRow.rating || '-' }}</dd></div>
+        <div><dt>{{ 'Default' | t }}</dt><dd>{{ (selectedRow.defaultFlag ? 'Yes' : 'No') | t }}</dd></div>
+        <div *ngIf="selectedRow.defaultDate"><dt>{{ 'Default date' | t }}</dt><dd>{{ selectedRow.defaultDate | date:'dd/MM/yyyy' }}</dd></div>
+        <div><dt>{{ 'Data source' | t }}</dt><dd>{{ selectedRow.dataSource }}</dd></div>
+      </dl>
+
+    </div>
+
+  </p-sidebar>
+
+
+</div>

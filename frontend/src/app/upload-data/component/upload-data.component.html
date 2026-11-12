@@ -1,0 +1,415 @@
+<div class="upload-data-container">
+
+  <!-- ===================================================== -->
+  <!-- UPLOAD -->
+  <!-- ===================================================== -->
+
+  <p-card>
+
+    <div class="upload-section">
+
+      <div class="upload-title">
+
+        <h2>
+          {{ 'Upload Risk Data' | t }}
+        </h2>
+
+        <p>
+          {{ 'Select a CSV or Excel file containing risk exposure data.' | t }}
+        </p>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- FILE DROP ZONE -->
+      <!-- ================================================= -->
+
+      <div
+        class="file-drop-zone"
+        [class.dragging]="isDragging"
+        (dragover)="onDragOverFile($event)"
+        (dragleave)="onDragLeaveFile($event)"
+        (drop)="onDropFile($event)">
+
+        <img class="illustration illustration-upload" src="assets/images/illustrations/upload-files.svg" alt="" aria-hidden="true" />
+
+
+        <div class="drop-zone-content">
+
+          <h3>
+            {{ 'Drag & drop your file here' | t }}
+          </h3>
+
+          <p>
+            {{ 'or select a file from your computer' | t }}
+          </p>
+
+
+          <!-- ============================================= -->
+          <!-- PRIME NG FILE SELECTOR -->
+          <!-- ============================================= -->
+
+          <p-fileUpload
+            mode="basic"
+            name="file"
+            accept=".csv,.xlsx"
+            [chooseLabel]="'Select File' | t"
+            chooseIcon="pi pi-folder-open"
+            [auto]="false"
+            (onSelect)="onFileSelected($event)">
+          </p-fileUpload>
+
+
+          <small>
+            {{ 'Supported formats: CSV, XLSX' | t }}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- SELECTED FILE -->
+      <!-- ================================================= -->
+
+      <div
+        class="selected-file"
+        *ngIf="selectedFile">
+
+        <div class="file-icon">
+
+          <i
+            class="pi"
+            [ngClass]="
+              uploadedFileName
+                .toLowerCase()
+                .endsWith('.xlsx')
+                ? 'pi-file-excel'
+                : 'pi-file'
+            ">
+          </i>
+
+        </div>
+
+
+        <div class="file-information">
+
+          <strong>
+            {{ uploadedFileName }}
+          </strong>
+
+          <small>
+            {{ selectedFile.size / 1024 | number:'1.0-2' }} KB
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- ACTIONS -->
+      <!-- ================================================= -->
+
+      <!-- Mismo patrón que la barra de acciones de los filtros:
+           secundario a la izquierda, principal a la derecha -->
+      <div class="filter-actions">
+
+        <button
+          pButton
+          type="button"
+          [label]="'Clear' | t"
+          icon="pi pi-times"
+          class="p-button-secondary"
+          [disabled]="uploading"
+          (click)="clear()">
+        </button>
+
+        <button
+          pButton
+          type="button"
+          [label]="'Process File' | t"
+          icon="pi pi-upload"
+          class="filter-action-primary"
+          [disabled]="!selectedFile || uploading || !canWrite"
+          [loading]="uploading"
+          (click)="processFile()">
+        </button>
+
+      </div>
+
+      <p class="readonly-note" *ngIf="!canWrite">
+        <i class="pi pi-lock"></i>
+        {{ 'Read-only access (Analyst role): uploading and deleting data requires the DataAdmin role.' | t }}
+      </p>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- ARCHIVOS DE DEMOSTRACIÓN (src/assets/demo-data)        -->
+  <!-- ===================================================== -->
+
+  <p-card class="demo-files-card">
+
+    <div class="demo-header">
+      <h2>{{ 'Demo files' | t }}</h2>
+      <p>{{ 'No file at hand? Use one of these CSV files to try the upload and the quality checks, or download it to see what it contains.' | t }}</p>
+    </div>
+
+    <section class="demo-group" *ngFor="let group of demoGroups">
+
+      <h3 class="demo-group-title">
+        <i [class]="group.icon" aria-hidden="true"></i>
+        {{ group.title | t }}
+      </h3>
+
+      <div class="demo-grid">
+
+        <article
+          class="demo-file"
+          *ngFor="let demo of group.files"
+          [class.is-selected]="uploadedFileName === demo.file">
+
+          <div class="demo-file-top">
+            <span class="demo-country">{{ demo.country }}</span>
+            <span class="demo-badge" [ngClass]="'demo-badge--' + demo.status">
+              {{ statusLabels[demo.status] | t }}
+            </span>
+          </div>
+
+          <strong class="demo-title">
+            {{ countryNames[demo.country] | t }} · {{ demo.period }}
+          </strong>
+
+          <span class="demo-name" [attr.title]="demo.file">{{ demo.file }}</span>
+
+          <p class="demo-note">{{ demo.note | t }}</p>
+
+          <div class="demo-meta">
+            <span><i class="pi pi-list" aria-hidden="true"></i> {{ demo.rows }} {{ 'rows' | t }}</span>
+            <span class="demo-initial" *ngIf="demo.initial && usesBackend">
+              <i class="pi pi-database" aria-hidden="true"></i> {{ 'Already in the initial data' | t }}
+            </span>
+          </div>
+
+          <div class="demo-actions">
+
+            <button
+              pButton
+              type="button"
+              class="p-button-sm demo-use"
+              icon="pi pi-upload"
+              [label]="'Use file' | t"
+              [loading]="loadingDemo === demo.file"
+              (click)="useDemoFile(demo)">
+            </button>
+
+            <a
+              pButton
+              class="p-button-sm p-button-secondary demo-download"
+              icon="pi pi-download"
+              [href]="demoUrl(demo)"
+              [attr.download]="demo.file"
+              [attr.title]="'Download' | t"
+              [attr.aria-label]="('Download' | t) + ' ' + demo.file">
+            </a>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- PREVIEW -->
+  <!-- ===================================================== -->
+
+  <p-card
+    *ngIf="previewData.length > 0"
+    class="preview-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          {{ 'Data Preview' | t }}
+        </h2>
+
+        <span>
+          {{ previewData.length }} {{ 'records detected' | t }}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <p-table
+      [value]="previewData"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [scrollable]="true"
+      scrollHeight="500px"
+      styleClass="p-datatable-sm corporate-table">
+
+
+      <!-- HEADER -->
+
+      <ng-template pTemplate="header">
+
+        <tr>
+
+          <th
+            *ngFor="let column of previewColumns">
+
+            {{ column }}
+
+          </th>
+
+        </tr>
+
+      </ng-template>
+
+
+      <!-- BODY -->
+
+      <ng-template
+        pTemplate="body"
+        let-row>
+
+        <tr>
+
+          <td
+            *ngFor="let column of previewColumns">
+
+            {{ row[column] }}
+
+          </td>
+
+        </tr>
+
+      </ng-template>
+
+    </p-table>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- SUCCESS -->
+  <!-- ===================================================== -->
+
+  <p-card
+    *ngIf="uploadSuccess"
+    class="result-card success-card">
+
+    <div class="result-content">
+
+      <div class="result-icon">
+
+        <i class="pi pi-check-circle"></i>
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          {{ 'Upload completed' | t }}
+        </h2>
+
+        <p>
+          {{ successMessage | t }}
+        </p>
+
+        <strong>
+          {{ 'Records processed' | t }}:
+          {{ recordsProcessed }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- ERROR -->
+  <!-- ===================================================== -->
+
+  <p-card
+    *ngIf="uploadError"
+    class="result-card error-card">
+
+    <div class="result-content">
+
+      <div class="result-icon">
+
+        <i class="pi pi-exclamation-triangle"></i>
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          {{ 'Upload failed' | t }}
+        </h2>
+
+        <p>
+          {{ errorMessage | t }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </p-card>
+
+
+  <!-- ===================================================== -->
+  <!-- INFORMATION -->
+  <!-- ===================================================== -->
+
+  <p-card class="information-card">
+
+    <div class="information-content">
+
+      <i class="pi pi-info-circle"></i>
+
+
+      <div>
+
+        <h3>
+          {{ 'Supported files' | t }}
+        </h3>
+
+        <p>
+          {{ 'CSV and Excel files containing risk exposure information can be uploaded.' | t }}
+        </p>
+
+        <p>
+          {{ 'The uploaded data will be inserted into the' | t }}
+          <strong>{{ 'risk_exposures' | t }}</strong> {{ 'database table.' | t }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </p-card>
+
+</div>

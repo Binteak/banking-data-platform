@@ -1,0 +1,510 @@
+/* ============================================================
+   HEADER — responsive (desktop: barra + tabs / móvil: drawer)
+   ============================================================ */
+
+:host {
+  /* El host no genera caja: el <header> (barra roja, menú y franja de
+     ubicación) es "sticky" y se queda arriba al hacer scroll */
+  display: contents;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #e53935;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .12);
+}
+
+/* ---------------- TOP BAR ---------------- */
+
+.topbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.logo {
+  height: 30px;
+  display: block;
+}
+
+/* ---------------- SELECTOR DE IDIOMA ---------------- */
+
+.lang-switch {
+  margin-left: auto;
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .4);
+}
+
+.lang-switch button {
+  padding: 3px 9px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.lang-switch button.active {
+  background: #fff;
+  color: #e53935;
+}
+
+.user-area {
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, .18);
+  border: 1px solid rgba(255, 255, 255, .45);
+  font-size: .8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-size: .9rem;
+}
+
+.logout-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 6px;
+  color: #fff;
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+
+.logout-link:hover {
+  background: rgba(255, 255, 255, .15);
+}
+
+/* ---------------- NAV (desktop: tabs) ---------------- */
+
+.submenu {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  padding: 0 24px;
+  background: #fff;
+  border-bottom: 1px solid #e3e6ea;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.submenu::-webkit-scrollbar {
+  display: none;
+}
+
+.submenu a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 12px;
+  color: #4b5563;
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color .2s ease;
+}
+
+.submenu a i {
+  font-size: .85rem;
+  color: #9ca3af;
+}
+
+.submenu a:hover {
+  color: #202124;
+}
+
+.submenu a::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: #e53935;
+  transform: scaleX(0);
+  transition: transform .2s ease;
+}
+
+.submenu a.active-link {
+  color: #e53935;
+}
+
+.submenu a.active-link i {
+  color: #e53935;
+}
+
+.submenu a.active-link::after {
+  transform: scaleX(1);
+}
+
+.submenu .doc-link {
+  margin-left: auto;
+}
+
+.mobile-user {
+  display: none;
+}
+
+/* ---------------- HAMBURGER ---------------- */
+
+.hamburguesa {
+  display: none;
+  width: 40px;
+  height: 40px;
+  margin-right: -8px;
+  padding: 11px 9px;
+  flex-direction: column;
+  justify-content: space-between;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.hamburguesa span {
+  display: block;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease;
+}
+
+.hamburguesa.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburguesa.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburguesa.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.backdrop {
+  display: none;
+}
+
+/* ============================================================
+   TABLET / MÓVIL
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .user-name {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .topbar {
+    height: 56px;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .user-area {
+    display: none;
+  }
+
+  .hamburguesa {
+    display: flex;
+    margin-left: 4px;
+  }
+
+  /* Drawer desplegable */
+  .submenu {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 0;
+    border-bottom: 0;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .15);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height .3s ease, padding .3s ease, visibility .3s;
+  }
+
+  .submenu.open {
+    max-height: calc(100vh - 56px);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    overflow-y: auto;
+    visibility: visible;
+  }
+
+  .submenu a {
+    padding: 14px 20px;
+    font-size: .95rem;
+    border-left: 3px solid transparent;
+  }
+
+  .submenu a::after {
+    display: none;
+  }
+
+  .submenu a.active-link {
+    background: #fdf2f2;
+    border-left-color: #e53935;
+  }
+
+  .submenu .doc-link {
+    margin-left: 0;
+    border-top: 1px solid #eef0f2;
+  }
+
+  .mobile-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    padding: 14px 20px 8px;
+    border-top: 1px solid #eef0f2;
+    color: #374151;
+    font-size: .9rem;
+    font-weight: 600;
+  }
+
+  .mobile-user .avatar {
+    background: #fdecec;
+    border-color: #f5c2c2;
+    color: #e53935;
+  }
+
+  .mobile-user .logout-link {
+    margin-left: auto;
+    color: #e53935;
+    border-color: #f5c2c2;
+  }
+
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 56px 0 0 0;
+    background: rgba(17, 24, 39, .35);
+    z-index: 999;
+  }
+}
+
+@media (max-width: 420px) {
+  .logo {
+    height: 26px;
+  }
+}
+
+/* ============================================================
+   PAGE BAR — franja fina con la ubicación actual
+   (28px: la mitad de la barra roja). Igual en escritorio y móvil:
+   "Módulo › Pantalla" + botón (i) con la descripción.
+   Va dentro del <header> sticky, así que se queda fija al hacer scroll.
+   ============================================================ */
+
+.page-bar {
+  position: relative;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  height: 28px;
+  padding: 0 32px;
+  background: #1c1f26;
+  border-bottom: 1px solid #0f1115;
+}
+
+.page-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1;
+}
+
+.page-section {
+  flex-shrink: 0;
+  color: #9ca3af;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.page-sep {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: #e53935;
+}
+
+.page-title {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* ---------- Botón (i) y globo de información ---------- */
+
+.page-info {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.page-info-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color .15s, background .15s;
+}
+
+.page-info-button i {
+  font-size: 14px;
+}
+
+.page-info-button:hover,
+.page-info-button.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, .1);
+}
+
+.page-info-button:focus-visible {
+  outline: 2px solid #e53935;
+  outline-offset: 1px;
+}
+
+/* Escritorio: el globo se abre hacia la derecha del botón */
+.page-info-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -6px;
+  width: 300px;
+  max-width: calc(100vw - 24px);
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, .16);
+  color: #374151;
+  animation: page-info-in .12s ease-out;
+}
+
+/* Flecha del globo apuntando al botón */
+.page-info-panel::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 11px;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-left: 1px solid #e5e7eb;
+  border-top: 1px solid #e5e7eb;
+  transform: rotate(45deg);
+}
+
+.page-info-panel strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #202124;
+  font-size: 13px;
+}
+
+.page-info-panel p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+@keyframes page-info-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Móvil: botón (i) a la derecha del todo y globo hacia la izquierda */
+@media (max-width: 900px) {
+
+  .page-bar {
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 20px;
+  }
+
+  .page-info-panel {
+    left: auto;
+    right: -6px;
+  }
+
+  .page-info-panel::before {
+    left: auto;
+    right: 11px;
+  }
+
+}

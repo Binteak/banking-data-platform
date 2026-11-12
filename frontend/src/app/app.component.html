@@ -1,0 +1,20 @@
+<app-header *ngIf="!isLoginPage"></app-header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer" *ngIf="!isLoginPage">
+  <span><strong>{{ 'Nexum Bank' | t }}</strong> {{ '· Banking Data Platform' | t }}</span>
+  <span>
+    {{ 'Demo environment with simulated data · Fictional brand' | t }}
+    <span class="footer-sep" aria-hidden="true">·</span>
+    <!-- Autoría (coherente con el LICENSE del repositorio) -->
+    © 2026
+    <a
+      class="footer-author"
+      href="https://github.com/Binteak"
+      target="_blank"
+      rel="noopener noreferrer">Alvaro Ruiz Ramírez</a>
+  </span>
+</footer>

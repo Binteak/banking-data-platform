@@ -1,0 +1,107 @@
+<header class="app-header">
+
+  <!-- ===================== TOP BAR ===================== -->
+  <div class="topbar">
+
+    <a class="brand" routerLink="/dashboard" (click)="closeMenu()">
+      <img src="assets/logo/NexumLogo.svg" alt="Nexum Bank" class="logo" />
+    </a>
+
+    <!-- Selector de idioma -->
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" [class.active]="i18n.lang === 'en'" (click)="i18n.setLang('en')">EN</button>
+      <button type="button" [class.active]="i18n.lang === 'es'" (click)="i18n.setLang('es')">ES</button>
+    </div>
+
+    <div class="user-area">
+      <span class="avatar" title="Admin">A</span>
+      <span class="user-name">{{ 'Admin' | t }}</span>
+      <button type="button" class="logout-link" (click)="logout()">
+        <span>{{ 'Logout' | t }}</span>
+        <i class="pi pi-sign-out"></i>
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="hamburguesa"
+      [class.active]="showMenu"
+      (click)="onMenuToggle()"
+      [attr.aria-expanded]="showMenu"
+      aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav class="submenu" [class.open]="showMenu">
+
+    <a *ngFor="let link of navLinks"
+       [routerLink]="link.path"
+       routerLinkActive="active-link"
+       (click)="closeMenu()">
+      <i [class]="link.icon"></i>
+      <span>{{ link.label | t }}</span>
+    </a>
+
+    <a class="doc-link" routerLink="/documentation" routerLinkActive="active-link" (click)="closeMenu()">
+      <i class="pi pi-book"></i>
+      <span>{{ 'Documentation' | t }}</span>
+    </a>
+
+    <!-- Solo visible en móvil -->
+    <div class="mobile-user">
+      <span class="avatar">A</span>
+      <span>{{ 'Admin' | t }}</span>
+      <button type="button" class="logout-link" (click)="logout()">
+        <span>{{ 'Logout' | t }}</span>
+        <i class="pi pi-sign-out"></i>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- ===================== PAGE BAR: dónde estoy =====================
+       Franja fina igual en escritorio y móvil: "Módulo › Pantalla" y, a la
+       derecha, un botón (i) que explica para qué sirve la pantalla. -->
+  <div class="page-bar" *ngIf="page">
+
+    <div class="page-location">
+      <span class="page-section">{{ page.section | t }}</span>
+      <i class="pi pi-angle-right page-sep" aria-hidden="true"></i>
+      <h1 class="page-title">{{ page.title | t }}</h1>
+    </div>
+
+    <div class="page-info">
+
+      <button
+        type="button"
+        class="page-info-button"
+        [class.active]="showInfo"
+        [attr.aria-expanded]="showInfo"
+        aria-controls="page-info-panel"
+        [attr.aria-label]="'About this screen' | t"
+        [attr.title]="'About this screen' | t"
+        (click)="toggleInfo($event)">
+        <i class="pi pi-info-circle"></i>
+      </button>
+
+      <div
+        id="page-info-panel"
+        class="page-info-panel"
+        role="dialog"
+        [attr.aria-label]="page.title | t"
+        *ngIf="showInfo">
+        <strong>{{ page.title | t }}</strong>
+        <p>{{ page.description | t }}</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+<div class="backdrop" *ngIf="showMenu" (click)="closeMenu()"></div>

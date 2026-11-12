@@ -1,0 +1,28 @@
+# Dependencias y compilados
+node_modules/
+dist/
+.angular/
+coverage/
+__pycache__/
+*.py[cod]
+
+# Entornos y secretos
+.venv/
+venv/
+.env
+.env.*
+
+# Bases de datos locales
+db.sqlite3
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+
+# Notas personales y material de diseño (no forman parte del proyecto)
+actualizar.txt
+project-design/
+
+# Datos vivos del backend (JSON, se crean desde backend/data/seed)
+backend/data/runtime/

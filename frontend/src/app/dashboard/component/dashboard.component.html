@@ -1,0 +1,203 @@
+<div class="dashboard-wrapper">
+
+  <!-- =========================================================
+       HERO
+       ========================================================= -->
+
+  <section class="dashboard-hero">
+
+    <div class="hero-image">
+
+      <img
+        src="assets/images/hero_platform.svg"
+        alt="Nexum Bank data platform illustration"
+      />
+
+      <div class="hero-overlay"></div>
+
+      <p class="hero-caption">
+        {{ 'Risk data you can trust.' | t }}
+      </p>
+
+    </div>
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        {{ 'BANKING DATA PLATFORM' | t }}
+      </div>
+
+      <h1>
+        {{ 'Welcome, Admin!' | t }}
+      </h1>
+
+      <p>
+        {{ 'Manage financial risk data from ingestion and governance through analysis and risk reporting.' | t }}
+      </p>
+
+      <div class="demo-notice">
+
+  <i class="pi pi-info-circle"></i>
+
+  <div>
+    <strong>{{ 'Demo environment' | t }}</strong>
+
+    <span>
+      {{ 'This application uses simulated mock data. Nexum Bank is a fictional brand. No real banking or customer data is used.' | t }}
+    </span>
+  </div>
+
+</div>
+
+      <div class="hero-actions">
+
+        <!-- <p-button
+          routerLink="/documentation"
+          styleClass="docButton"
+          label="Documentation"
+          icon="pi pi-book"
+          iconPos="right">
+        </p-button> -->
+
+      </div>
+
+    </div>
+
+    <!-- Ilustración decorativa (solo en pantallas grandes) -->
+    <img
+      class="hero-illustration"
+      src="assets/images/illustrations/analyst-dashboard.svg"
+      alt=""
+      aria-hidden="true" />
+
+  </section>
+
+
+  <!-- =========================================================
+       KPIs — última fecha de reporte
+       ========================================================= -->
+
+  <section class="kpi-grid" *ngIf="kpis" [attr.aria-label]="'Key indicators' | t">
+
+    <div class="kpi-card">
+      <span class="kpi-label">{{ 'Latest reporting date' | t }}</span>
+      <span class="kpi-value">{{ kpis.reportingDate | date: 'dd/MM/yyyy' }}</span>
+      <span class="kpi-sub">{{ kpis.countries }} {{ (kpis.countries === 1 ? 'country' : 'countries') | t }}</span>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-label">{{ 'Risk exposures' | t }}</span>
+      <span class="kpi-value">{{ kpis.exposures | number }}</span>
+      <span class="kpi-sub">{{ 'Records in the latest dataset' | t }}</span>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-label">{{ 'Exposure at default' | t }}</span>
+      <span class="kpi-value">{{ formatCompactEur(kpis.totalEad) }}</span>
+      <span class="kpi-sub">{{ 'Total EAD' | t }}</span>
+    </div>
+
+    <div class="kpi-card" [class.kpi-card--alert]="kpis.defaults > 0">
+      <span class="kpi-label">{{ 'Default rate' | t }}</span>
+      <span class="kpi-value">{{ kpis.defaultRate | percent: '1.1-1' }}</span>
+      <span class="kpi-sub">{{ kpis.defaults }} {{ (kpis.defaults === 1 ? 'defaulted exposure' : 'defaulted exposures') | t }}</span>
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       PLATFORM HEADER
+       ========================================================= -->
+
+  <section class="platform-header">
+
+    <div>
+
+      <div class="eyebrow">
+        {{ 'PLATFORM OVERVIEW' | t }}
+      </div>
+
+      <h2>
+        {{ 'Financial Risk Data Management' | t }}
+      </h2>
+
+    </div>
+
+    <p>
+      {{ 'Centralized management of risk data, validation, analysis and reporting.' | t }}
+    </p>
+
+  </section>
+
+
+  <!-- =========================================================
+       MÓDULOS
+       Una sola lista (en el .ts) con las mismas secciones que la
+       franja superior; las pestañas solo filtran por sección.
+       ========================================================= -->
+
+  <nav class="dashboard-menu" role="tablist">
+
+    <div
+      *ngFor="let item of menuItems"
+      class="menu-item"
+      role="tab"
+      tabindex="0"
+      [attr.aria-selected]="selected === item"
+      [class.selected]="selected === item"
+      (click)="onSelect(item)"
+      (keydown.enter)="onSelect(item)"
+    >
+      {{ item | t }}
+    </div>
+
+  </nav>
+
+
+  <section class="dashboard-section">
+
+    <div class="cards-container">
+
+      <a
+        *ngFor="let module of visibleModules"
+        [routerLink]="module.route"
+        class="simple-card"
+      >
+
+        <div class="card-content">
+
+          <div class="card-top">
+
+            <span class="card-category">
+              {{ module.section | t }}
+            </span>
+
+            <div class="card-icon-wrapper">
+              <i [class]="module.icon + ' card-icon'"></i>
+            </div>
+
+          </div>
+
+          <h3>
+            {{ module.title | t }}
+          </h3>
+
+          <p>
+            {{ module.description | t }}
+          </p>
+
+          <span class="card-link">
+            {{ 'Open module' | t }}
+            <i class="pi pi-arrow-right"></i>
+          </span>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </section>
+
+</div>

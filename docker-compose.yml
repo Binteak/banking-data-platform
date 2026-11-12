@@ -1,0 +1,27 @@
+# Banking Data Platform completo:  docker compose up --build  ->  http://localhost:8080
+# Sin base de datos: el backend guarda los datos en archivos JSON (backend/data).
+# Al recrear el contenedor del backend, los datos vuelven al estado inicial de la demo.
+services:
+  backend:
+    build: ./backend
+    image: banking-data-platform-backend:2.0.0
+    restart: unless-stopped
+    environment:
+      DJANGO_SECRET_KEY: cambia-esta-clave-en-produccion
+      DJANGO_DEBUG: "false"
+      DJANGO_ALLOWED_HOSTS: "*"
+      # Opcional: clave propia para firmar los JWT (por defecto, la SECRET_KEY)
+      # JWT_SECRET: otra-clave-larga-y-aleatoria
+      JWT_ACCESS_TOKEN_MINUTES: "60"
+      # Login con Microsoft Entra ID (no son secretos)
+      ENTRA_CLIENT_ID: "865e23e7-814b-43d6-8c63-4382f04a8eec"
+      ENTRA_TENANT_ID: "5429381b-9b96-4d68-a37e-e090b4b241c1"
+
+  frontend:
+    build: ./frontend
+    image: banking-data-platform-frontend:2.0.0
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
