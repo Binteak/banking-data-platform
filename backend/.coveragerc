@@ -1,0 +1,10 @@
+[run]
+source = api
+omit =
+    api/tests.py
+    api/migrations/*
+    api/management/commands/build_demo_seed.py
+
+[report]
+show_missing = true
+skip_empty = true

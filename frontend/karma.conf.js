@@ -53,6 +53,14 @@ module.exports = function (config) {
       'Chrome'
     ],
 
+    // Navegador sin interfaz para CI (GitHub Actions): npm run test:ci
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu']
+      }
+    },
+
     restartOnFileChange: true
   });
 };

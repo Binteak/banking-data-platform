@@ -574,4 +574,46 @@ export const DOC_SECTIONS: DocSection[] = [
       }
     ]
   },
+
+  // ==========================================================
+  // TESTING & QUALITY
+  // ==========================================================
+  {
+    id: 'quality',
+    group: GROUP_REFERENCE,
+    title: t('Testing & quality', 'Testing y calidad'),
+    icon: 'pi pi-check-circle',
+    summary: t(
+      'Automated tests with coverage, continuous integration on GitHub Actions and static analysis with SonarQube Cloud.',
+      'Tests automatizados con coverage, integración continua con GitHub Actions y análisis estático con SonarQube Cloud.'
+    ),
+    purpose: t(
+      'Every change pushed to the repository is built and tested automatically before it is deployed. Backend coverage is high; frontend tests currently cover the login and Data Explorer and are being extended to the remaining screens.',
+      'Cada cambio que se sube al repositorio se compila y se prueba automáticamente antes de desplegarse. El backend tiene un coverage alto; los tests del frontend cubren hoy el login y Data Explorer y se están ampliando al resto de pantallas.'
+    ),
+    steps: [
+      t('Push or pull request → GitHub Actions runs the backend and frontend jobs in parallel.',
+        'Push o pull request → GitHub Actions ejecuta en paralelo los jobs de backend y frontend.'),
+      t('Backend: Django system checks and unit tests measured with coverage.py (coverage.xml).',
+        'Backend: comprobaciones de Django y tests unitarios medidos con coverage.py (coverage.xml).'),
+      t('Frontend: Karma + Jasmine in headless Chrome with coverage (lcov) and a production build.',
+        'Frontend: Karma + Jasmine en Chrome headless con coverage (lcov) y build de producción.'),
+      t('SonarQube Cloud receives both coverage reports and applies the quality gate (bugs, vulnerabilities, code smells, duplication).',
+        'SonarQube Cloud recibe los dos informes de coverage y aplica el quality gate (bugs, vulnerabilidades, code smells, duplicados).'),
+    ],
+    rules: {
+      title: t('Test suites', 'Baterías de tests'),
+      rows: [
+        { name: t('Backend · Django REST', 'Backend · Django REST'), formula: '26 tests · 86 % coverage',
+          description: t('Login and JWT (demo and Entra ID), role permissions, CSV upload, data quality, housekeeping, reporting and audit log.',
+                         'Login y JWT (demo y Entra ID), permisos por rol, subida de CSV, calidad de datos, housekeeping, reporting y log de auditoría.') },
+        { name: t('Frontend · Angular', 'Frontend · Angular'), formula: '17 tests · login + Data Explorer',
+          description: t('Login component, AuthService (session, roles, Microsoft sign-in), Data Explorer service and root component. Other screens in progress.',
+                         'Componente de login, AuthService (sesión, roles, Microsoft), servicio de Data Explorer y componente raíz. Resto de pantallas en curso.') },
+        { name: t('Quality gate', 'Quality gate'), formula: 'SonarQube Cloud · Sonar way',
+          description: t('New code must pass the gate: no new bugs or vulnerabilities and reviewed security hotspots.',
+                         'El código nuevo debe superar el gate: sin bugs ni vulnerabilidades nuevas y con los security hotspots revisados.') },
+      ]
+    },
+  },
 ];

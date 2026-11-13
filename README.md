@@ -1,5 +1,9 @@
 # Banking Data Platform
 
+[![CI](https://github.com/Binteak/banking-data-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Binteak/banking-data-platform/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Binteak_banking-data-platform&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Binteak_banking-data-platform)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Binteak_banking-data-platform&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Binteak_banking-data-platform)
+
 Plataforma web Full Stack para la gestión de datos de riesgo bancario: carga de datos (CSV), controles de calidad, housekeeping, exploración y reporting de métricas de riesgo. Datos 100 % simulados.
 
 **Angular 18 · TypeScript · PrimeNG · Python · Django REST Framework · Docker** — sin base de datos: el backend guarda los datos en archivos JSON.
@@ -61,12 +65,27 @@ npm install --legacy-peer-deps
 npx ng serve --port 4201
 ```
 
-## Tests
+## Tests, coverage y CI
+
+| Capa | Tests | Qué cubren | Coverage |
+|---|---|---|---|
+| Backend (Django) | 26 | Login y JWT (demo y Entra ID), permisos por rol, subida CSV, calidad de datos, housekeeping, reporting, log de auditoría | 86 % del paquete `api` |
+| Frontend (Angular) | 17 | Login, `AuthService` (sesión, roles, Microsoft), servicio de Data Explorer, componente raíz | Pantallas de login y Data Explorer; el resto de pantallas, en curso |
 
 ```bash
-cd backend && python manage.py test               # subida, calidad, informes, borrado, log de auditoría y JWT
-cd frontend && npx ng test --watch=false          # 10 tests de componentes y servicios
+# Backend
+cd backend && pip install -r requirements-dev.txt
+coverage run manage.py test api && coverage report
+
+# Frontend
+cd frontend && npm run test:coverage   # informe HTML en coverage/frontend/index.html
 ```
+
+**GitHub Actions** ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) se ejecuta en cada push y pull request:
+
+1. **Backend**: `manage.py check`, tests con coverage (`coverage.xml`).
+2. **Frontend**: `npm ci`, tests en Chrome headless con coverage (`lcov.info`) y build de producción.
+3. **SonarQube Cloud**: análisis estático (bugs, vulnerabilidades, code smells, duplicados) con el coverage de ambas capas y quality gate. Se activa al configurar el secreto `SONAR_TOKEN` en el repositorio.
 
 ## Autenticación y seguridad
 
