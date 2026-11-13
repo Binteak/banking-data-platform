@@ -82,7 +82,7 @@ export class DataQualityService {
             country,
 
             dates:
-              Array.from(dates).sort()
+              Array.from(dates).sort((a, b) => String(a).localeCompare(String(b)))
 
           }));
 

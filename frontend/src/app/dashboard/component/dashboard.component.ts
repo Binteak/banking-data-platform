@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../service/dashboard.service';
 
 import { CardModule } from 'primeng/card';
@@ -51,7 +51,7 @@ interface DashboardModule {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
@@ -153,7 +153,7 @@ export class DashboardComponent {
         const latest = rows
           .map(row => row.reportingDate)
           .filter(Boolean)
-          .sort()
+          .sort((a, b) => String(a).localeCompare(String(b)))
           .pop();
 
         const current = rows.filter(row => row.reportingDate === latest);

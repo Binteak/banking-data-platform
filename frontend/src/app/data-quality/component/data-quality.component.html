@@ -16,8 +16,8 @@
 
       <!-- COUNTRY -->
       <div class="filter-field">
-        <label>{{ 'Country' | t }}</label>
-        <p-dropdown
+        <label for="data-quality-country">{{ 'Country' | t }}</label>
+        <p-dropdown inputId="data-quality-country"
           [options]="countries"
           [(ngModel)]="selectedCountry"
           optionLabel="label"
@@ -34,8 +34,8 @@
 
       <!-- REPORTING DATE -->
       <div class="filter-field">
-        <label>{{ 'Reporting date' | t }}</label>
-        <p-dropdown
+        <label for="data-quality-reporting-date">{{ 'Reporting date' | t }}</label>
+        <p-dropdown inputId="data-quality-reporting-date"
           [options]="availableDates"
           [(ngModel)]="selectedReportingDate"
           optionLabel="label"
@@ -237,7 +237,9 @@
 
             <i class="pi pi-search"></i>
 
+            <label for="data-quality-search" class="sr-only">{{ 'Search controls...' | t }}</label>
             <input
+              id="data-quality-search"
               pInputText
               type="text"
               [placeholder]="'Search controls...' | t"
@@ -259,31 +261,31 @@
 
         <tr>
 
-          <th>
+          <th scope="col">
             {{ 'Control' | t }}
           </th>
 
-          <th>
+          <th scope="col">
             {{ 'Description' | t }}
           </th>
 
-          <th>
+          <th scope="col">
             {{ 'Status' | t }}
           </th>
 
-          <th>
+          <th scope="col">
             {{ 'Records' | t }}
           </th>
 
-          <th>
+          <th scope="col">
             {{ 'Failed' | t }}
           </th>
 
-          <th>
+          <th scope="col">
             {{ 'Execution' | t }}
           </th>
 
-          <th>
+          <th scope="col">
             {{ 'Details' | t }}
           </th>
 

@@ -232,7 +232,7 @@ export class AuthService {
   // Token de forma JWT para el modo demo sin backend (sin firma real).
   private buildMockToken(username: string): string {
     const encode = (obj: object) =>
-      btoa(JSON.stringify(obj)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      btoa(JSON.stringify(obj)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
     const exp = Math.floor(Date.now() / 1000) + 60 * 60;
     return `${encode({ alg: 'none', typ: 'JWT' })}.${encode({ sub: username, exp, roles: ['DataAdmin'] })}.mock`;
   }

@@ -12,7 +12,8 @@
 
     <div class="doc-search">
       <i class="pi pi-search"></i>
-      <input type="search" [(ngModel)]="search" [placeholder]="tx(L.search)" [attr.aria-label]="tx(L.search)" />
+      <label for="doc-search" class="sr-only">{{ tx(L.search) }}</label>
+      <input id="doc-search" type="search" [(ngModel)]="search" [placeholder]="tx(L.search)" [attr.aria-label]="tx(L.search)" />
     </div>
 
     <nav class="doc-nav-groups">
@@ -87,9 +88,9 @@
         <table class="doc-table">
           <thead>
             <tr>
-              <th>{{ tx(L.name) }}</th>
-              <th>{{ tx(L.formula) }}</th>
-              <th>{{ tx(L.description) }}</th>
+              <th scope="col">{{ tx(L.name) }}</th>
+              <th scope="col">{{ tx(L.formula) }}</th>
+              <th scope="col">{{ tx(L.description) }}</th>
             </tr>
           </thead>
           <tbody>
@@ -110,10 +111,10 @@
         <table class="doc-table">
           <thead>
             <tr>
-              <th>{{ tx(L.column) }}</th>
-              <th>{{ tx(L.type) }}</th>
-              <th>{{ tx(L.required) }}</th>
-              <th>{{ tx(L.description) }}</th>
+              <th scope="col">{{ tx(L.column) }}</th>
+              <th scope="col">{{ tx(L.type) }}</th>
+              <th scope="col">{{ tx(L.required) }}</th>
+              <th scope="col">{{ tx(L.description) }}</th>
             </tr>
           </thead>
           <tbody>
@@ -147,10 +148,10 @@
         <table class="doc-table">
           <thead>
             <tr>
-              <th>{{ tx(L.method) }}</th>
-              <th>{{ tx(L.endpoint) }}</th>
-              <th>{{ tx(L.access) }}</th>
-              <th>{{ tx(L.description) }}</th>
+              <th scope="col">{{ tx(L.method) }}</th>
+              <th scope="col">{{ tx(L.endpoint) }}</th>
+              <th scope="col">{{ tx(L.access) }}</th>
+              <th scope="col">{{ tx(L.description) }}</th>
             </tr>
           </thead>
           <tbody>

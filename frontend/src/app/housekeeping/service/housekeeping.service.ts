@@ -265,7 +265,7 @@ export class HousekeepingService {
               )
 
           )
-        ].sort();
+        ].sort((a, b) => String(a).localeCompare(String(b)));
 
       };
 

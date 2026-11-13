@@ -282,7 +282,7 @@ export class DataExplorerComponent implements OnInit {
         (value, index, self) =>
           self.indexOf(value) === index
       )
-      .sort();
+      .sort((a, b) => String(a).localeCompare(String(b)));
 
   }
 

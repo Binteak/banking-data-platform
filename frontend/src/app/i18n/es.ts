@@ -60,7 +60,7 @@ export const ES: { [english: string]: string } = {
   'Sign in': 'Iniciar sesión',
   'Access the risk data management workspace.': 'Accede al espacio de gestión de datos de riesgo.',
   'User': 'Usuario',
-  'Password': 'Contraseña',
+  'Password': 'Contraseña', // NOSONAR: etiqueta del formulario, no es una credencial
   'Login': 'Entrar',
   'Demo credentials:': 'Credenciales demo:',
   'Invalid username or password': 'Usuario o contraseña incorrectos',

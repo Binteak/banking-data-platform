@@ -15,8 +15,8 @@
     <div class="filter-grid" [class.is-expanded]="showAllFilters">
 
       <div class="filter-field">
-        <label>{{ 'Reporting Date' | t }}</label>
-        <p-dropdown
+        <label for="housekeeping-reporting-date">{{ 'Reporting Date' | t }}</label>
+        <p-dropdown inputId="housekeeping-reporting-date"
           [options]="reportingDates"
           optionLabel="label"
           optionValue="value"
@@ -30,8 +30,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Entity ID' | t }}</label>
-        <input
+        <label for="housekeeping-entity-id">{{ 'Entity ID' | t }}</label>
+        <input id="housekeeping-entity-id"
           pInputText
           type="text"
           [placeholder]="'ENT-0001' | t"
@@ -40,8 +40,8 @@
       </div>
 
       <div class="filter-field">
-        <label>{{ 'Entity Name' | t }}</label>
-        <input
+        <label for="housekeeping-entity-name">{{ 'Entity Name' | t }}</label>
+        <input id="housekeeping-entity-name"
           pInputText
           type="text"
           [placeholder]="'Entity name' | t"
@@ -50,8 +50,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Country' | t }}</label>
-        <p-dropdown
+        <label for="housekeeping-country">{{ 'Country' | t }}</label>
+        <p-dropdown inputId="housekeeping-country"
           [options]="countries"
           optionLabel="label"
           optionValue="value"
@@ -65,8 +65,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Portfolio' | t }}</label>
-        <p-dropdown
+        <label for="housekeeping-portfolio">{{ 'Portfolio' | t }}</label>
+        <p-dropdown inputId="housekeeping-portfolio"
           [options]="portfolios"
           optionLabel="label"
           optionValue="value"
@@ -80,8 +80,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Product Type' | t }}</label>
-        <p-dropdown
+        <label for="housekeeping-product-type">{{ 'Product Type' | t }}</label>
+        <p-dropdown inputId="housekeeping-product-type"
           [options]="productTypes"
           optionLabel="label"
           optionValue="value"
@@ -95,8 +95,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Risk Stage' | t }}</label>
-        <p-dropdown
+        <label for="housekeeping-risk-stage">{{ 'Risk Stage' | t }}</label>
+        <p-dropdown inputId="housekeeping-risk-stage"
           [options]="riskStages"
           optionLabel="label"
           optionValue="value"
@@ -110,8 +110,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Rating' | t }}</label>
-        <input
+        <label for="housekeeping-rating">{{ 'Rating' | t }}</label>
+        <input id="housekeeping-rating"
           pInputText
           type="text"
           [placeholder]="'AAA / AA / A / BBB' | t"
@@ -120,8 +120,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Default' | t }}</label>
-        <p-dropdown
+        <label for="housekeeping-default">{{ 'Default' | t }}</label>
+        <p-dropdown inputId="housekeeping-default"
           [options]="defaultOptions"
           optionLabel="label"
           optionValue="value"
@@ -135,8 +135,8 @@
       </div>
 
       <div class="filter-field filter-field--secondary">
-        <label>{{ 'Data Source' | t }}</label>
-        <p-dropdown
+        <label for="housekeeping-data-source">{{ 'Data Source' | t }}</label>
+        <p-dropdown inputId="housekeeping-data-source"
           [options]="dataSources"
           optionLabel="label"
           optionValue="value"
@@ -265,24 +265,24 @@
 
         <tr>
 
-          <th pFrozenColumn style="width: 3rem">
+          <th scope="col" pFrozenColumn style="width: 3rem">
             <p-tableHeaderCheckbox />
           </th>
 
-          <th pFrozenColumn>{{ 'Entity' | t }}</th>
-          <th>{{ 'Date' | t }}</th>
-          <th>{{ 'Country' | t }}</th>
-          <th>{{ 'Portfolio' | t }}</th>
-          <th>{{ 'Product' | t }}</th>
-          <th class="num">{{ 'Exposure' | t }}</th>
-          <th class="num">{{ 'EAD' | t }}</th>
-          <th class="num">{{ 'PD' | t }}</th>
-          <th class="num">{{ 'LGD' | t }}</th>
-          <th>{{ 'Stage' | t }}</th>
-          <th>{{ 'Rating' | t }}</th>
-          <th>{{ 'Default' | t }}</th>
-          <th>{{ 'Source' | t }}</th>
-          <th class="num">{{ 'ID' | t }}</th>
+          <th scope="col" pFrozenColumn>{{ 'Entity' | t }}</th>
+          <th scope="col">{{ 'Date' | t }}</th>
+          <th scope="col">{{ 'Country' | t }}</th>
+          <th scope="col">{{ 'Portfolio' | t }}</th>
+          <th scope="col">{{ 'Product' | t }}</th>
+          <th scope="col" class="num">{{ 'Exposure' | t }}</th>
+          <th scope="col" class="num">{{ 'EAD' | t }}</th>
+          <th scope="col" class="num">{{ 'PD' | t }}</th>
+          <th scope="col" class="num">{{ 'LGD' | t }}</th>
+          <th scope="col">{{ 'Stage' | t }}</th>
+          <th scope="col">{{ 'Rating' | t }}</th>
+          <th scope="col">{{ 'Default' | t }}</th>
+          <th scope="col">{{ 'Source' | t }}</th>
+          <th scope="col" class="num">{{ 'ID' | t }}</th>
 
         </tr>
 

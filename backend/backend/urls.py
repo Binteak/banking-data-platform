@@ -20,7 +20,9 @@ Including another URLconf
 from django.urls import path 
 from django.conf.urls import include
 from django.http import HttpResponse
+from django.views.decorators.http import require_GET
 
+@require_GET
 def home(request):
     return HttpResponse("Backend API funcionando")
 
