@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" xmlns:c2pa="http://c2pa.org/manifest">
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="#E53935"/>
-    <path d="M2 42 Q32 34 62 22 L62 46 Q62 62 46 62 L18 62 Q2 62 2 46 Z" fill="#C62828"/>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#CF1F2E"/>
+    <path d="M2 42 Q32 34 62 22 L62 46 Q62 62 46 62 L18 62 Q2 62 2 46 Z" fill="#B31A27"/>
     <path d="M32 11 L52 22 Q53.5 23 52 24.5 L12 24.5 Q10.5 23 12 22 Z" fill="#FFFFFF"/>
     <rect x="15" y="28" width="6" height="17" rx="2" fill="#FFFFFF"/>
     <rect x="29" y="28" width="6" height="17" rx="2" fill="#FFFFFF"/>

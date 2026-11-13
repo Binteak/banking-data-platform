@@ -200,7 +200,7 @@ export class DocumentationComponent implements OnInit {
     const pageHeight = pdf.internal.pageSize.getHeight();
     const margin = 16;
     const contentWidth = pageWidth - margin * 2;
-    const red: [number, number, number] = [229, 57, 53];
+    const red: [number, number, number] = [207, 31, 46];
     const dark: [number, number, number] = [28, 31, 38];
     const grey: [number, number, number] = [107, 114, 128];
     const now = new Date();

@@ -1,6 +1,6 @@
 /* ============================================================
    DOCUMENTATION — menú lateral + ficha por pantalla
-   Colores de marca: rojo (#e53935), grises y oscuro (#1c1f26).
+   Colores de marca: rojo (#CF1F2E), grises y oscuro (#1c1f26).
    ============================================================ */
 
 .doc-layout {
@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #e53935;
+  color: #CF1F2E;
   font-weight: 700;
 }
 
@@ -66,8 +66,8 @@
 }
 
 .doc-search input:focus {
-  border-color: #e53935;
-  box-shadow: 0 0 0 3px rgba(229, 57, 53, .12);
+  border-color: #CF1F2E;
+  box-shadow: 0 0 0 3px rgba(207, 31, 46, .12);
 }
 
 .doc-nav-groups {
@@ -120,13 +120,13 @@
 
 .doc-nav-item.active {
   background: #fdecec;
-  border-left-color: #e53935;
-  color: #e53935;
+  border-left-color: #CF1F2E;
+  color: #CF1F2E;
   font-weight: 600;
 }
 
 .doc-nav-item.active i {
-  color: #e53935;
+  color: #CF1F2E;
 }
 
 .doc-nav-empty {
@@ -161,12 +161,12 @@
 }
 
 .doc-btn-primary {
-  background: #e53935;
+  background: #CF1F2E;
   color: #fff;
 }
 
 .doc-btn-primary:hover:not(:disabled) {
-  background: #c62828;
+  background: #B31A27;
 }
 
 .doc-btn-light {
@@ -210,13 +210,13 @@
   padding: 22px 24px;
   background: #fff;
   border: 1px solid #e3e6ea;
-  border-top: 4px solid #e53935;
+  border-top: 4px solid #CF1F2E;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
 }
 
 .doc-eyebrow {
-  color: #e53935;
+  color: #CF1F2E;
   font-size: .72rem;
   font-weight: 700;
   letter-spacing: .08em;
@@ -233,7 +233,7 @@
 }
 
 .doc-hero h2 i {
-  color: #e53935;
+  color: #CF1F2E;
   font-size: 1.25rem;
 }
 
@@ -274,7 +274,7 @@
   width: 28px;
   height: 3px;
   border-radius: 2px;
-  background: #e53935;
+  background: #CF1F2E;
 }
 
 .doc-lead {
@@ -302,12 +302,12 @@
 }
 
 .doc-steps li::marker {
-  color: #e53935;
+  color: #CF1F2E;
   font-weight: 700;
 }
 
 .doc-list li::marker {
-  color: #e53935;
+  color: #CF1F2E;
 }
 
 /* ---------------- TABLAS ---------------- */
@@ -370,7 +370,7 @@
   border: 1px solid #f5c2c2;
   border-radius: 6px;
   background: #fdf2f2;
-  color: #b71c1c;
+  color: #9C1622;
 }
 
 .doc-code {
@@ -390,7 +390,7 @@
 
 .doc-pill-on {
   background: #fdecec;
-  color: #e53935;
+  color: #CF1F2E;
 }
 
 .doc-method {
@@ -416,7 +416,7 @@
 
 .doc-method-delete {
   background: #fdecec;
-  color: #c62828;
+  color: #B31A27;
 }
 
 /* ---------------- ANTERIOR / SIGUIENTE ---------------- */
@@ -450,11 +450,11 @@
 }
 
 .doc-pager-btn:hover {
-  border-color: #e53935;
+  border-color: #CF1F2E;
 }
 
 .doc-pager-btn i {
-  color: #e53935;
+  color: #CF1F2E;
 }
 
 .doc-pager-btn small {
@@ -519,7 +519,7 @@
     margin-bottom: 10px;
     padding: 6px 0;
     border: 1px solid #e5e7eb;
-    border-left: 3px solid #e53935;
+    border-left: 3px solid #CF1F2E;
     border-radius: 8px;
     background: #fff;
   }

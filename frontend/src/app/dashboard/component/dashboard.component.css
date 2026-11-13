@@ -38,7 +38,7 @@
   padding: 16px 18px;
   background: #ffffff;
   border: 1px solid #e3e6ea;
-  border-left: 3px solid #e53935;
+  border-left: 3px solid #CF1F2E;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
 }
@@ -224,7 +224,7 @@
 
 ::ng-deep .docButton {
 
-  background: #e53935 !important;
+  background: #CF1F2E !important;
 
   border: none !important;
 
@@ -416,7 +416,7 @@
 
   height: 2px;
 
-  background: #e53935;
+  background: #CF1F2E;
 
   border-radius: 2px;
 
@@ -429,7 +429,7 @@
 
 .menu-item.selected {
 
-  color: #e53935;
+  color: #CF1F2E;
 
 }
 
@@ -586,7 +586,7 @@
 
   font-size: 14px;
 
-  color: #e53935;
+  color: #CF1F2E;
 
   transition: transform .2s ease;
 
@@ -642,7 +642,7 @@
 
   font-weight: 700;
 
-  color: #e53935;
+  color: #CF1F2E;
 
 }
 
@@ -679,14 +679,14 @@
 
   background: rgba(255, 255, 255, 0.92);
 
-  border-left: 3px solid #e53935;
+  border-left: 3px solid #CF1F2E;
   border-radius: 6px;
 
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .demo-notice > i {
-  color: #e53935;
+  color: #CF1F2E;
 
   font-size: 17px;
 

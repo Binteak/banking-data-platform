@@ -110,7 +110,7 @@
 
 .summary-card.danger {
 
-  border-left: 4px solid #c62828;
+  border-left: 4px solid #B31A27;
 
 }
 
@@ -184,7 +184,7 @@
 
 .failure-count {
 
-  color: #c62828;
+  color: #B31A27;
 
   font-weight: 700;
 
@@ -207,26 +207,26 @@
    ============================================================ */
 
 :host ::ng-deep .corporate-button {
-  background: #e53935 !important;
-  border: 1px solid #e53935 !important;
+  background: #CF1F2E !important;
+  border: 1px solid #CF1F2E !important;
   color: #ffffff !important;
 }
 
 :host ::ng-deep .corporate-button:hover {
-  background: #c62828 !important;
-  border-color: #c62828 !important;
+  background: #B31A27 !important;
+  border-color: #B31A27 !important;
   color: #ffffff !important;
 }
 
 :host ::ng-deep .corporate-button:focus {
-  background: #e53935 !important;
-  border-color: #e53935 !important;
-  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.15) !important;
+  background: #CF1F2E !important;
+  border-color: #CF1F2E !important;
+  box-shadow: 0 0 0 2px rgba(207, 31, 46, 0.15) !important;
 }
 
 :host ::ng-deep .corporate-button:active {
-  background: #b71c1c !important;
-  border-color: #b71c1c !important;
+  background: #9C1622 !important;
+  border-color: #9C1622 !important;
 }
 
 :host ::ng-deep .corporate-button:disabled {

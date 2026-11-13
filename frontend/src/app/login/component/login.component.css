@@ -14,8 +14,8 @@
   padding: 24px 16px;
   box-sizing: border-box;
   background:
-    radial-gradient(circle at 15% 10%, rgba(229, 57, 53, .10), transparent 45%),
-    radial-gradient(circle at 90% 90%, rgba(229, 57, 53, .07), transparent 40%),
+    radial-gradient(circle at 15% 10%, rgba(207, 31, 46, .10), transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(207, 31, 46, .07), transparent 40%),
     #f5f6f8;
 }
 
@@ -29,7 +29,7 @@
   box-sizing: border-box;
   background: #fff;
   border: 1px solid #e3e6ea;
-  border-top: 4px solid #e53935;
+  border-top: 4px solid #CF1F2E;
   border-radius: 12px;
   box-shadow: 0 12px 32px rgba(17, 24, 39, .08);
 }
@@ -102,8 +102,8 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #e53935;
-  box-shadow: 0 0 0 3px rgba(229, 57, 53, .12);
+  border-color: #CF1F2E;
+  box-shadow: 0 0 0 3px rgba(207, 31, 46, .12);
 }
 
 .login-error {
@@ -120,19 +120,19 @@ input:focus {
   width: 100%;
   height: 46px;
   cursor: pointer;
-  background: #e53935;
+  background: #CF1F2E;
   color: #fff;
   border: none;
   border-radius: 8px;
   font: inherit;
   font-size: 1rem;
   font-weight: 700;
-  box-shadow: 0 6px 14px rgba(229, 57, 53, .25);
+  box-shadow: 0 6px 14px rgba(207, 31, 46, .25);
   transition: background-color .2s ease, transform .1s ease;
 }
 
 .custom-button:hover {
-  background: #c62828;
+  background: #B31A27;
 }
 
 .custom-button:active {
@@ -211,7 +211,7 @@ input:focus {
 }
 
 .demo-hint i {
-  color: #e53935;
+  color: #CF1F2E;
 }
 
 .angular-powered {
@@ -261,6 +261,6 @@ input:focus {
 }
 
 .lang-switch button.active {
-  background: #e53935;
+  background: #CF1F2E;
   color: #fff;
 }
