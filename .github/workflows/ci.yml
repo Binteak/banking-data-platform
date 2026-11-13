@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         # Versiones exactas con hash y solo wheels (sin ejecutar setup.py)
-        run: pip install --only-binary :all: --require-hashes -r requirements-dev.lock
+        run: "pip install --only-binary :all: --require-hashes -r requirements-dev.lock"
 
       - name: Django system checks
         run: python manage.py check
